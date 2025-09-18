@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Build/">
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/Foundatio.CommandQuery.EntityFramework.Tests/Foundatio.CommandQuery.EntityFramework.Tests.csproj" Id="dfcc892d-9a69-4710-99be-a6a9dfb2f2ff" />
+    <Project Path="tests/Foundatio.CommandQuery.MongoDB.Tests/Foundatio.CommandQuery.MongoDB.Tests.csproj" Id="29f65eb8-1b16-4ab9-85d4-ee5173137c89" />
+    <Project Path="tests/Foundatio.CommandQuery.Tests/Foundatio.CommandQuery.Tests.csproj" Id="eb09253e-86ea-43c9-9640-d72ddab0de07" />
+  </Folder>
+  <Project Path="src/Foundatio.CommandQuery.EntityFramework/Foundatio.CommandQuery.EntityFramework.csproj" Id="94dc262e-6e49-4ad4-9767-7c25a0c4065e" />
+  <Project Path="src/Foundatio.CommandQuery.MongoDB/Foundatio.CommandQuery.MongoDB.csproj" Id="7252b936-1787-43f3-867c-0f2727abff4a" />
+  <Project Path="src/Foundatio.CommandQuery/Foundatio.CommandQuery.csproj" Id="1e67f0dc-5ce8-4d5e-a61e-3f92b7aeb512" />
+</Solution>

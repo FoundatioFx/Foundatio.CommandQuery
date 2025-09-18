@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Foundatio.CommandQuery.EntityFramework\LinqExpressionBuilder.cs" Link="LinqExpressionBuilder.cs" />
+    <Compile Include="..\Foundatio.CommandQuery.EntityFramework\QueryExtensions.cs" Link="QueryExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="3.5.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Foundatio.CommandQuery\Foundatio.CommandQuery.csproj" />
+  </ItemGroup>
+
+</Project>
