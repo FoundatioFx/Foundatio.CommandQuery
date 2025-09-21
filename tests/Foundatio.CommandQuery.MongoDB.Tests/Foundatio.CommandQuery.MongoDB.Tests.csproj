@@ -9,6 +9,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Foundatio.Mediator</InterceptorsNamespaces>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +20,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentValidation" Version="12.0.0" />
-    <PackageReference Include="Foundatio.Mediator" Version="1.0.0-preview9.3" />
     <PackageReference Include="Injectio" Version="5.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="MongoDB.Abstracts" Version="6.6.0" />
@@ -33,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Foundatio.Mediator\src\Foundatio.Mediator\Foundatio.Mediator.csproj">
+      <OutputItemType>Analyzer</OutputItemType>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Foundatio.CommandQuery.MongoDB\Foundatio.CommandQuery.MongoDB.csproj" />
   </ItemGroup>
 

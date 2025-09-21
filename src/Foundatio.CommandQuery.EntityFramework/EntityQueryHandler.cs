@@ -2,7 +2,7 @@ using System.Linq.Dynamic.Core;
 
 using Foundatio.CommandQuery.Commands;
 using Foundatio.CommandQuery.Definitions;
-using Foundatio.CommandQuery.Results;
+using Foundatio.CommandQuery.Queries;
 using Foundatio.Mediator;
 
 using Microsoft.EntityFrameworkCore;
@@ -92,7 +92,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
         return Result<IReadOnlyList<TReadModel>>.Success(results);
     }
 
-    public virtual async ValueTask<QueryResult<TReadModel>> HandleAsync(
+    public virtual async ValueTask<Result<QueryResult<TReadModel>>> HandleAsync(
         QueryEntities<TReadModel> request,
         CancellationToken cancellationToken = default)
     {
@@ -121,7 +121,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
 
             // short circuit if total is zero
             if (total == 0)
-                return new QueryResult<TReadModel>([]);
+                return Result<QueryResult<TReadModel>>.Success(new());
 
             query = query.Page(queryDefinition.Page.Value, queryDefinition.PageSize.Value);
         }
@@ -133,6 +133,12 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        return new QueryResult<TReadModel>(results) { Total = total };
+        var queryResult = new QueryResult<TReadModel>
+        {
+            Total = total,
+            Data = results
+        };
+
+        return Result<QueryResult<TReadModel>>.Success(queryResult);
     }
 }

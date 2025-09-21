@@ -2,7 +2,7 @@ using System.Text.Json;
 
 using AwesomeAssertions;
 
-using Foundatio.CommandQuery.Results;
+using Foundatio.CommandQuery.Queries;
 
 namespace Foundatio.CommandQuery.Tests.Results;
 
@@ -15,40 +15,6 @@ public class QueryResultTests
     }
 
     [Fact]
-    public void Constructor_WithValidResults_SetsValueProperty()
-    {
-        // Arrange
-        var results = new List<TestModel>
-        {
-            new() { Id = 1, Name = "Test1" },
-            new() { Id = 2, Name = "Test2" }
-        };
-
-        // Act
-        var queryResult = new QueryResult<TestModel>(results);
-
-        // Assert
-        queryResult.Value.Should().BeEquivalentTo(results);
-        queryResult.Value.Should().HaveCount(2);
-        queryResult.Value.First().Id.Should().Be(1);
-        queryResult.Value.First().Name.Should().Be("Test1");
-    }
-
-    [Fact]
-    public void Constructor_WithEmptyResults_SetsEmptyValueProperty()
-    {
-        // Arrange
-        var results = new List<TestModel>();
-
-        // Act
-        var queryResult = new QueryResult<TestModel>(results);
-
-        // Assert
-        queryResult.Value.Should().NotBeNull();
-        queryResult.Value.Should().BeEmpty();
-    }
-
-    [Fact]
     public void JsonSerialization_WithContinuationTokenAndTotal_SerializesCorrectly()
     {
         // Arrange
@@ -56,8 +22,9 @@ public class QueryResultTests
         {
             new() { Id = 1, Name = "Test1" }
         };
-        var queryResult = new QueryResult<TestModel>(results)
+        var queryResult = new QueryResult<TestModel>
         {
+            Data = results,
             ContinuationToken = "token-123",
             Total = 50
         };
@@ -73,9 +40,9 @@ public class QueryResultTests
         deserialized.Should().NotBeNull();
         deserialized!.ContinuationToken.Should().Be("token-123");
         deserialized.Total.Should().Be(50);
-        deserialized.Value.Should().HaveCount(1);
-        deserialized.Value.First().Id.Should().Be(1);
-        deserialized.Value.First().Name.Should().Be("Test1");
+        deserialized.Data.Should().HaveCount(1);
+        deserialized.Data.First().Id.Should().Be(1);
+        deserialized.Data.First().Name.Should().Be("Test1");
     }
 
     [Fact]
@@ -86,7 +53,7 @@ public class QueryResultTests
         {
             new() { Id = 1, Name = "Test1" }
         };
-        var queryResult = new QueryResult<TestModel>(results);
+        var queryResult = new QueryResult<TestModel> { Data = results };
 
         // Act
         var json = JsonSerializer.Serialize(queryResult);
@@ -104,8 +71,9 @@ public class QueryResultTests
         {
             new() { Id = 1, Name = "Test1" }
         };
-        var queryResult = new QueryResult<TestModel>(results)
+        var queryResult = new QueryResult<TestModel>
         {
+            Data = results,
             ContinuationToken = "token-456"
         };
 
@@ -125,8 +93,9 @@ public class QueryResultTests
         {
             new() { Id = 1, Name = "Test1" }
         };
-        var queryResult = new QueryResult<TestModel>(results)
+        var queryResult = new QueryResult<TestModel>
         {
+            Data = results,
             Total = 25
         };
 

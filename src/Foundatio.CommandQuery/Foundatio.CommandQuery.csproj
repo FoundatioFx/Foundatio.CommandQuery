@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio.Mediator.Abstractions" Version="1.0.0-preview9.3" />
+    <ProjectReference Include="..\..\..\Foundatio.Mediator\src\Foundatio.Mediator.Abstractions\Foundatio.Mediator.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

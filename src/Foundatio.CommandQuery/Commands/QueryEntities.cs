@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 
 using Foundatio.CommandQuery.Abstracts;
 using Foundatio.CommandQuery.Queries;
-using Foundatio.CommandQuery.Results;
 
 namespace Foundatio.CommandQuery.Commands;
 

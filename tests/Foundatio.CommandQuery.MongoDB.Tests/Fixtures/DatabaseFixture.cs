@@ -51,6 +51,7 @@ public class DatabaseFixture : TestApplicationFixture, IAsyncLifetime
         services.AddHostedService<DatabaseInitializer>();
         services.AddMongoRepository("Tracker");
 
+        services.AddCommandQuery();
         services.AddMediator();
 
         services.AddFoundatioCommandQueryMongoDBTests();

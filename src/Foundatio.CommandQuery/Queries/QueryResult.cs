@@ -1,20 +1,19 @@
+using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 using Foundatio.Mediator;
 
-namespace Foundatio.CommandQuery.Results;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Foundatio.CommandQuery.Queries;
 
 /// <summary>
 /// A result for an entity query.
 /// </summary>
 /// <typeparam name="TReadModel">The type of the read model.</typeparam>
-public class QueryResult<TReadModel> : Result<IReadOnlyList<TReadModel>>
+public class QueryResult<TReadModel>
 {
-    public QueryResult(IReadOnlyList<TReadModel> results)
-        : base(results)
-    {
-    }
-
     /// <summary>
     /// Gets or sets the continuation token for retrieving the next page of results.
     /// </summary>
@@ -32,4 +31,11 @@ public class QueryResult<TReadModel> : Result<IReadOnlyList<TReadModel>>
     [JsonPropertyName("total")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public long? Total { get; set; }
+
+    /// <summary>
+    /// The data returned by the query.
+    /// </summary>
+    [JsonPropertyName("data")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<TReadModel>? Data { get; set; }
 }
