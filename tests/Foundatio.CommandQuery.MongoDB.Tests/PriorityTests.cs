@@ -2,6 +2,7 @@ using Foundatio.CommandQuery.Commands;
 using Foundatio.CommandQuery.MongoDB.Tests.Domain.Models;
 using Foundatio.CommandQuery.MongoDB.Tests.Fixtures;
 using Foundatio.CommandQuery.MongoDB.Tests.Mocks;
+using Foundatio.CommandQuery.Queries;
 
 using MediatR.CommandQuery.MongoDB.Tests;
 
@@ -17,7 +18,7 @@ public class PriorityTests : DatabaseTestBase
     }
 
     [Fact]
-    public async Task CreateEntity()
+    public async Task FullTest()
     {
         var mediator = Services.GetService<IMediator>();
         mediator.Should().NotBeNull();
@@ -46,5 +47,64 @@ public class PriorityTests : DatabaseTestBase
         created.Description.Should().Be(createModel.Description);
         created.DisplayOrder.Should().Be(createModel.DisplayOrder);
 
+        // get entity
+        var getCommand = new GetEntity<string, PriorityReadModel>(MockPrincipal.Default, created.Id);
+        var getResult = await mediator.InvokeAsync<Result<PriorityReadModel>>(getCommand);
+        getResult.Should().NotBeNull();
+
+        getResult.IsSuccess.Should().BeTrue();
+        getResult.Value.Should().NotBeNull();
+
+        var readModel = (PriorityReadModel)getResult;
+        readModel.Should().NotBeNull();
+        readModel.Id.Should().Be(created.Id);
+        readModel.Name.Should().Be(createModel.Name);
+        readModel.Description.Should().Be(createModel.Description);
+
+        // query entity
+        var queryDefinition = new QueryDefinition
+        {
+            Page = 1,
+            PageSize = 10,
+            Sorts = [new() { Name = nameof(PriorityReadModel.Name) }]
+        };
+
+        var queryCommand = new QueryEntities<PriorityReadModel>(MockPrincipal.Default, queryDefinition);
+
+        var queryResult = await mediator.InvokeAsync<Result<QueryResult<PriorityReadModel>>>(queryCommand);
+        queryResult.Should().NotBeNull();
+
+        var queryModel = (QueryResult<PriorityReadModel>)queryResult;
+        queryModel.Should().NotBeNull();
+        queryModel.Data.Should().NotBeNull();
+        queryModel.Total.Should().BeGreaterThan(0);
+
+        // update entity
+        PriorityUpdateModel updateRequest = new()
+        {
+            Name = createModel.Name + " Updated",
+            Description = createModel.Description + " Updated",
+            DisplayOrder = createModel.DisplayOrder + 1,
+            IsActive = !createModel.IsActive
+        };
+        var updateCommand = new UpdateEntity<string, PriorityUpdateModel, PriorityReadModel>(MockPrincipal.Default, created.Id, updateRequest);
+
+        var updateResult = await mediator.InvokeAsync<Result<PriorityReadModel>>(updateCommand);
+        updateResult.Should().NotBeNull();
+
+        updateResult.IsSuccess.Should().BeTrue();
+        updateResult.Value.Should().NotBeNull();
+
+        var updatedModel = (PriorityReadModel)updateResult;
+        updatedModel.Should().NotBeNull();
+        updatedModel.Id.Should().Be(created.Id);
+        updatedModel.Name.Should().Be(updateRequest.Name);
+        updatedModel.Description.Should().Be(updateRequest.Description);
+
+        // delete entity
+        var deleteCommand = new DeleteEntity<string, PriorityReadModel>(MockPrincipal.Default, created.Id);
+        var deleteResult = await mediator.InvokeAsync<Result<PriorityReadModel>>(deleteCommand);
+        deleteResult.Should().NotBeNull();
+        deleteResult.IsSuccess.Should().BeTrue();
     }
 }

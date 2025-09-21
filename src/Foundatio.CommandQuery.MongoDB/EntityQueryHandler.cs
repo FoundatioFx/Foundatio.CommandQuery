@@ -19,7 +19,7 @@ public abstract class EntityQueryHandler<TEntity, TKey, TReadModel>
     {
     }
 
-    public virtual async ValueTask<Result<TReadModel?>> HandleAsync(
+    public virtual async ValueTask<Result<TReadModel>> HandleAsync(
         GetEntity<TKey, TReadModel> request,
         CancellationToken cancellationToken = default)
     {
@@ -33,8 +33,10 @@ public abstract class EntityQueryHandler<TEntity, TKey, TReadModel>
 
         // convert entity to read model
         var readModel = Mapper.Map<TEntity, TReadModel>(result);
+        if (readModel == null)
+            return Result<TReadModel>.NotFound("Could not map read model.");
 
-        return Result<TReadModel?>.Success(readModel);
+        return Result<TReadModel>.Success(readModel);
 
     }
 

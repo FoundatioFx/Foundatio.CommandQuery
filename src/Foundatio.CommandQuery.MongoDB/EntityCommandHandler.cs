@@ -15,7 +15,7 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
     {
     }
 
-    public virtual async ValueTask<Result<TReadModel?>> HandleAsync(
+    public virtual async ValueTask<Result<TReadModel>> HandleAsync(
         CreateEntity<TCreateModel, TReadModel> request,
         CancellationToken cancellationToken = default)
     {
@@ -24,6 +24,8 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
 
         // create new entity from model
         var entity = Mapper.Map<TCreateModel, TEntity>(request.Model);
+        if (entity == null)
+            return Result<TReadModel>.BadRequest("Could not map create model.");
 
         // apply create metadata
         if (entity is ITrackCreated createdModel)
@@ -45,11 +47,13 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
 
         // convert to read model
         var readModel = Mapper.Map<TEntity, TReadModel>(entity);
+        if (readModel == null)
+            return Result<TReadModel>.NotFound("Could not map read model.");
 
-        return Result<TReadModel?>.Success(readModel);
+        return Result<TReadModel>.Success(readModel);
     }
 
-    public virtual async ValueTask<Result<TReadModel?>> HandleAsync(
+    public virtual async ValueTask<Result<TReadModel>> HandleAsync(
        UpdateEntity<TKey, TUpdateModel, TReadModel> request,
        CancellationToken cancellationToken = default)
     {
@@ -63,7 +67,7 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
             .ConfigureAwait(false);
 
         if (entity == null && !request.Upsert)
-            return Result<TReadModel?>.NotFound($"Entity with id '{request.Id}' not found.");
+            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
 
         // create entity if not found
         if (entity == null)
@@ -97,12 +101,14 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
 
         // return read model
         var result = Mapper.Map<TEntity, TReadModel>(entity);
+        if (result == null)
+            return Result<TReadModel>.NotFound("Could not map read model.");
 
-        return Result<TReadModel?>.Success(result);
+        return Result<TReadModel>.Success(result);
     }
 
 
-    public virtual async ValueTask<Result<TReadModel?>> HandleAsync(
+    public virtual async ValueTask<Result<TReadModel>> HandleAsync(
       DeleteEntity<TKey, TReadModel> request,
       CancellationToken cancellationToken = default)
     {
@@ -115,7 +121,7 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
             .ConfigureAwait(false);
 
         if (entity == null)
-            return Result<TReadModel?>.NotFound($"Entity with id '{request.Id}' not found.");
+            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
 
         // apply update metadata
         if (entity is ITrackUpdated updateEntity)
@@ -147,7 +153,9 @@ public abstract class EntityCommandHandler<TEntity, TKey, TReadModel, TCreateMod
 
         // return read model
         var result = Mapper.Map<TEntity, TReadModel>(entity);
+        if (result == null)
+            return Result<TReadModel>.NotFound("Could not map read model.");
 
-        return Result<TReadModel?>.Success(result);
+        return Result<TReadModel>.Success(result);
     }
 }
