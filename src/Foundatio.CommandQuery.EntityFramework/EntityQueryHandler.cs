@@ -67,9 +67,9 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             .ConfigureAwait(false);
 
         if (result == null)
-            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
+            return Result.NotFound($"Entity with id '{request.Id}' not found.");
 
-        return Result<TReadModel>.Success(result);
+        return result;
     }
 
     public virtual async ValueTask<Result<IReadOnlyList<TReadModel>>> HandleAsync(
@@ -92,7 +92,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        return Result<IReadOnlyList<TReadModel>>.Success(results);
+        return results;
     }
 
     public virtual async ValueTask<Result<QueryResult<TReadModel>>> HandleAsync(
@@ -124,7 +124,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
 
             // short circuit if total is zero
             if (total == 0)
-                return Result<QueryResult<TReadModel>>.Success(new());
+                return new QueryResult<TReadModel>();
 
             query = query.Page(queryDefinition.Page.Value, queryDefinition.PageSize.Value);
         }
@@ -142,6 +142,6 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             Data = results
         };
 
-        return Result<QueryResult<TReadModel>>.Success(queryResult);
+        return queryResult;
     }
 }

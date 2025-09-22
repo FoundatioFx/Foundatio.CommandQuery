@@ -83,9 +83,9 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
             .ConfigureAwait(false);
 
         if (result == null)
-            return Result<TReadModel>.NotFound("Could not map read model.");
+            return Result.NotFound("Could not map read model.");
 
-        return Result<TReadModel>.Success(result);
+        return result;
     }
 
     public virtual async ValueTask<Result<TReadModel>> HandleAsync(
@@ -105,7 +105,7 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
             : default;
 
         if (entity == null && !request.Upsert)
-            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
+            return Result.NotFound($"Entity with id '{request.Id}' not found.");
 
         // create entity if not found
         if (entity == null)
@@ -153,9 +153,9 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
             .ConfigureAwait(false);
 
         if (result == null)
-            return Result<TReadModel>.NotFound("Could not map read model.");
+            return Result.NotFound("Could not map read model.");
 
-        return Result<TReadModel>.Success(result);
+        return result;
     }
 
     public virtual async ValueTask<Result<TReadModel>> HandleAsync(
@@ -173,7 +173,7 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
             .ConfigureAwait(false);
 
         if (entity == null)
-            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
+            return Result.NotFound($"Entity with id '{request.Id}' not found.");
 
         // read the entity before deleting it
         var query = DataContext
@@ -222,6 +222,6 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
             .SaveChangesAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        return Result<TReadModel>.Success(result);
+        return result;
     }
 }
