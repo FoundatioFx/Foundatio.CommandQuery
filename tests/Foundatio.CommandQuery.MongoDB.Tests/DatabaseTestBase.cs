@@ -1,10 +1,8 @@
 using Foundatio.CommandQuery.MongoDB.Tests.Fixtures;
 
-using Xunit.Abstractions;
-
 using XUnit.Hosting;
 
-namespace MediatR.CommandQuery.MongoDB.Tests;
+namespace Foundatio.CommandQuery.MongoDB.Tests;
 
 [Collection(DatabaseCollection.CollectionName)]
 public abstract class DatabaseTestBase : TestHostBase<DatabaseFixture>

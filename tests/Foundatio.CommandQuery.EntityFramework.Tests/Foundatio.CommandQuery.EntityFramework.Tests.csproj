@@ -9,16 +9,23 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Foundatio.Mediator</InterceptorsNamespaces>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="Injectio" Version="5.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Testcontainers.MsSql" Version="4.7.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="XUnit.Hosting" Version="2.0.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,11 +33,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Foundatio.Mediator\src\Foundatio.Mediator\Foundatio.Mediator.csproj">
+      <OutputItemType>Analyzer</OutputItemType>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Foundatio.CommandQuery.EntityFramework\Foundatio.CommandQuery.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="AwesomeAssertions" />
+    <Using Include="Bogus" />
+    <Using Include="FluentValidation" />
+    <Using Include="Foundatio.Mediator" />
+    <Using Include="Foundatio.CommandQuery.Definitions" />
     <Using Include="Xunit" />
+    <Using Include="Xunit.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

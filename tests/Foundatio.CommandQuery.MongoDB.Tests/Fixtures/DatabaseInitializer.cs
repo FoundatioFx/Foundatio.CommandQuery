@@ -47,12 +47,24 @@ public class DatabaseInitializer : IHostedService
         await userRepository.UpsertAsync(Constants.UserConstants.LeeAdama, cancellationToken);
         await userRepository.UpsertAsync(Constants.UserConstants.GaiusBaltar, cancellationToken);
         await userRepository.UpsertAsync(Constants.UserConstants.SaulTigh, cancellationToken);
+        await userRepository.UpsertAsync(Constants.UserConstants.NumberSix, cancellationToken);
 
         var taskRepository = _serviceProvider.GetRequiredService<IMongoEntityRepository<Data.Entities.Task>>();
         await taskRepository.UpsertAsync(Constants.TaskConstants.DefendTheFleet, cancellationToken);
         await taskRepository.UpsertAsync(Constants.TaskConstants.ProtectThePresident, cancellationToken);
         await taskRepository.UpsertAsync(Constants.TaskConstants.FindEarth, cancellationToken);
+        await taskRepository.UpsertAsync(Constants.TaskConstants.DestroyHumans, cancellationToken);
 
+        var roleRepository = _serviceProvider.GetRequiredService<IMongoEntityRepository<Role>>();
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Admiral, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.President, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Commander, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Ensign, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Lieutenant, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Captain, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Civilian, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Cylon, cancellationToken);
+        await roleRepository.UpsertAsync(Constants.RoleConstants.Specialist, cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

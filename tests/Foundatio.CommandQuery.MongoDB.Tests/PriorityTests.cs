@@ -1,10 +1,9 @@
 using Foundatio.CommandQuery.Commands;
+using Foundatio.CommandQuery.MongoDB.Tests.Constants;
 using Foundatio.CommandQuery.MongoDB.Tests.Domain.Models;
 using Foundatio.CommandQuery.MongoDB.Tests.Fixtures;
 using Foundatio.CommandQuery.MongoDB.Tests.Mocks;
 using Foundatio.CommandQuery.Queries;
-
-using MediatR.CommandQuery.MongoDB.Tests;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -106,5 +105,81 @@ public class PriorityTests : DatabaseTestBase
         var deleteResult = await mediator.InvokeAsync<Result<PriorityReadModel>>(deleteCommand);
         deleteResult.Should().NotBeNull();
         deleteResult.IsSuccess.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task GetEntity()
+    {
+        var mediator = Services.GetService<IMediator>();
+        mediator.Should().NotBeNull();
+
+        var getCommand = new GetEntity<string, PriorityReadModel>(MockPrincipal.Default, PriorityConstants.Normal.Id);
+        var getResult = await mediator.InvokeAsync<Result<PriorityReadModel>>(getCommand);
+        getResult.Should().NotBeNull();
+
+        getResult.IsSuccess.Should().BeTrue();
+        getResult.Value.Should().NotBeNull();
+
+        var readModel = (PriorityReadModel)getResult;
+        readModel.Should().NotBeNull();
+        readModel.Id.Should().Be(PriorityConstants.Normal.Id);
+        readModel.Name.Should().Be(PriorityConstants.Normal.Name);
+        readModel.Description.Should().Be(PriorityConstants.Normal.Description);
+    }
+
+    [Fact]
+    public async Task GetEntities()
+    {
+        var mediator = Services.GetService<IMediator>();
+        mediator.Should().NotBeNull();
+
+        string[] ids =
+        [
+            PriorityConstants.Low.Id,
+            PriorityConstants.Normal.Id,
+            PriorityConstants.High.Id,
+        ];
+        var command = new GetEntities<string, PriorityReadModel>(MockPrincipal.Default, ids);
+        var result = await mediator.InvokeAsync<Result<IReadOnlyList<PriorityReadModel>>>(command);
+        result.Should().NotBeNull();
+
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+
+        var readModels = result.Value;
+        readModels.Should().NotBeNull();
+        readModels.Should().HaveCount(3);
+
+        var normalModel = readModels.FirstOrDefault(m => m.Id == PriorityConstants.Normal.Id);
+        normalModel.Should().NotBeNull();
+        normalModel.Name.Should().Be(PriorityConstants.Normal.Name);
+        normalModel.Description.Should().Be(PriorityConstants.Normal.Description);
+    }
+
+    [Fact]
+    public async Task QueryEntities()
+    {
+        var mediator = Services.GetService<IMediator>();
+        mediator.Should().NotBeNull();
+
+        var filter = QueryBuilder.Search<PriorityReadModel>("Normal");
+        var sort = QueryBuilder.Sort<PriorityReadModel>();
+
+        var definition = new QueryDefinition
+        {
+            Page = 1,
+            PageSize = 10,
+            Filter = filter,
+            Sorts = [sort]
+        };
+
+        var command = new QueryEntities<PriorityReadModel>(MockPrincipal.Default, definition);
+        var result = await mediator.InvokeAsync<Result<QueryResult<PriorityReadModel>>>(command);
+        result.Should().NotBeNull();
+
+        var queryModel = (QueryResult<PriorityReadModel>)result;
+        queryModel.Should().NotBeNull();
+        queryModel.Data.Should().NotBeNull();
+        queryModel.Total.Should().BeGreaterThan(0);
     }
 }

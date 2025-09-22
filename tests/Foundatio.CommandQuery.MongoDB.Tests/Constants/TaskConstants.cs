@@ -34,4 +34,15 @@ public static class TaskConstants
         AssignedId = UserConstants.KaraThrace.Id,
         TenantId = TenantConstants.Battlestar.Id,
     };
+
+    public static readonly Data.Entities.Task DestroyHumans = new()
+    {
+        Id = "68d02f0fbc54e7c1b40cb9be",
+        Title = "Destroy Humans",
+        Description = "Destroy all human life",
+        PriorityId = PriorityConstants.Normal.Id,
+        StatusId = StatusConstants.InProgress.Id,
+        AssignedId = UserConstants.NumberSix.Id,
+        TenantId = TenantConstants.Cylons.Id,
+    };
 }

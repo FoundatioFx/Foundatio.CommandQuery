@@ -46,7 +46,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
     protected IMapper Mapper { get; }
 
 
-    public virtual async ValueTask<Result<TReadModel?>> HandleAsync(
+    public virtual async ValueTask<Result<TReadModel>> HandleAsync(
         GetEntity<TKey, TReadModel> request,
         CancellationToken cancellationToken = default)
     {
@@ -66,7 +66,10 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        return Result<TReadModel?>.Success(result);
+        if (result == null)
+            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
+
+        return Result<TReadModel>.Success(result);
     }
 
     public virtual async ValueTask<Result<IReadOnlyList<TReadModel>>> HandleAsync(

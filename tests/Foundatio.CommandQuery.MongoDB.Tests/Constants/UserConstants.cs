@@ -52,4 +52,14 @@ public static class UserConstants
         DisplayName = "Saul Tigh",
         IsEmailAddressConfirmed = true
     };
+
+    ///<summary>Number Six</summary>
+    public static readonly User NumberSix = new()
+    {
+        Id = "68d02ed0bc54e7c1b40cb9bc",
+        DisplayName = "Number Six",
+        EmailAddress = "six@cylon.com",
+        IsEmailAddressConfirmed = true
+    };
+
 }

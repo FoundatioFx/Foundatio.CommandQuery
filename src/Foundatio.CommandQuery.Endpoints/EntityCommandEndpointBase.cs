@@ -1,0 +1,225 @@
+using System.Security.Claims;
+
+using Foundatio.CommandQuery.Commands;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
+
+namespace Foundatio.CommandQuery.Endpoints;
+
+/// <summary>
+/// Provides a base class for defining RESTful command endpoints for an entity, including create, update, upsert, patch, and delete operations.
+/// </summary>
+/// <typeparam name="TKey">The type of the entity key.</typeparam>
+/// <typeparam name="TListModel">The type of the list model returned by queries.</typeparam>
+/// <typeparam name="TReadModel">The type of the read model returned by single-entity queries and commands.</typeparam>
+/// <typeparam name="TCreateModel">The type of the model used to create a new entity.</typeparam>
+/// <typeparam name="TUpdateModel">The type of the model used to update or patch an entity.</typeparam>
+/// <remarks>
+/// This class extends <see cref="EntityQueryEndpointBase{TKey, TListModel, TReadModel}"/> to provide endpoints for entity command operations.
+/// It is intended for use in applications to standardize CRUD API patterns.
+/// </remarks>
+public abstract class EntityCommandEndpointBase<TKey, TListModel, TReadModel, TCreateModel, TUpdateModel>
+    : EntityQueryEndpointBase<TKey, TListModel, TReadModel>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EntityCommandEndpointBase{TKey, TListModel, TReadModel, TCreateModel, TUpdateModel}"/> class.
+    /// </summary>
+    /// <param name="loggerFactory">The logger factory to create an <see cref="ILogger"/> for this endpoint.</param>
+    /// <param name="entityName">The name of the entity for this endpoint.</param>
+    /// <param name="routePrefix">The route prefix for this endpoint. If not set, <paramref name="entityName"/> is used.</param>
+    protected EntityCommandEndpointBase(ILoggerFactory loggerFactory, string entityName, string? routePrefix = null)
+        : base(loggerFactory, entityName, routePrefix)
+    {
+    }
+
+    /// <summary>
+    /// Maps the command endpoints for the entity, including create, update, upsert, patch, and delete operations.
+    /// </summary>
+    /// <param name="group">The <see cref="RouteGroupBuilder"/> used to define the endpoint group.</param>
+    /// <remarks>
+    /// This method adds endpoints for:
+    /// <list type="bullet">
+    /// <item><description>GET {id}/update - Retrieve an entity for update</description></item>
+    /// <item><description>POST - Create a new entity</description></item>
+    /// <item><description>POST {id} - Upsert (create or update) an entity</description></item>
+    /// <item><description>PUT {id} - Update an entity</description></item>
+    /// <item><description>PATCH {id} - Patch an entity using a JSON patch document</description></item>
+    /// <item><description>DELETE {id} - Delete an entity</description></item>
+    /// </list>
+    /// </remarks>
+    protected override void MapGroup(RouteGroupBuilder group)
+    {
+        base.MapGroup(group);
+
+        group
+            .MapGet("{id}/update", GetUpdateQuery)
+            .ProducesProblem(StatusCodes.Status500InternalServerError)
+            .ProducesValidationProblem()
+            .WithTags(EntityName)
+            .WithName($"Get{EntityName}Update")
+            .WithSummary("Get an entity for update by id")
+            .WithDescription("Get an entity for update by id");
+
+        group
+            .MapPost("", CreateCommand)
+            .ProducesProblem(StatusCodes.Status500InternalServerError)
+            .ProducesValidationProblem()
+            .WithTags(EntityName)
+            .WithName($"Create{EntityName}")
+            .WithSummary("Create new entity")
+            .WithDescription("Create new entity");
+
+        group
+            .MapPut("{id}", UpdateCommand)
+            .ProducesProblem(StatusCodes.Status500InternalServerError)
+            .ProducesValidationProblem()
+            .WithTags(EntityName)
+            .WithName($"Update{EntityName}")
+            .WithSummary("Update entity")
+            .WithDescription("Update entity");
+
+        group
+            .MapDelete("{id}", DeleteCommand)
+            .ProducesProblem(StatusCodes.Status500InternalServerError)
+            .ProducesValidationProblem()
+            .WithTags(EntityName)
+            .WithName($"Delete{EntityName}")
+            .WithSummary("Delete entity")
+            .WithDescription("Delete entity");
+    }
+
+    /// <summary>
+    /// Retrieves an entity for update by its identifier using the mediator service.
+    /// </summary>
+    /// <param name="mediator">The <see cref="IMediator"/> to send the request to.</param>
+    /// <param name="id">The identifier of the entity to retrieve.</param>
+    /// <param name="user">The current security claims principal.</param>
+    /// <param name="cancellationToken">The request cancellation token.</param>
+    /// <returns>
+    /// An awaitable task returning either <see cref="Ok{TUpdateModel}"/> with the update model or <see cref="ProblemHttpResult"/> on error.
+    /// </returns>
+    protected virtual async Task<Results<Ok<TUpdateModel>, ProblemHttpResult>> GetUpdateQuery(
+        [FromServices] IMediator mediator,
+        [FromRoute] TKey id,
+        ClaimsPrincipal? user = default,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var command = new GetEntity<TKey, TUpdateModel>(user, id);
+            var result = await mediator.InvokeAsync<Result<TUpdateModel>>(command, cancellationToken).ConfigureAwait(false);
+
+            return TypedResults.Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error GetUpdateQuery: {ErrorMessage}", ex.Message);
+
+            var details = ex.ToProblemDetails();
+            return TypedResults.Problem(details);
+        }
+    }
+
+    /// <summary>
+    /// Creates a new entity using the provided create model and the mediator service.
+    /// </summary>
+    /// <param name="mediator">The <see cref="IMediator"/> to send the request to.</param>
+    /// <param name="createModel">The model containing data for the new entity.</param>
+    /// <param name="user">The current security claims principal.</param>
+    /// <param name="cancellationToken">The request cancellation token.</param>
+    /// <returns>
+    /// An awaitable task returning either <see cref="Ok{TReadModel}"/> with the created entity or <see cref="ProblemHttpResult"/> on error.
+    /// </returns>
+    protected virtual async Task<Results<Ok<TReadModel>, ProblemHttpResult>> CreateCommand(
+        [FromServices] IMediator mediator,
+        [FromBody] TCreateModel createModel,
+        ClaimsPrincipal? user = default,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var command = new CreateEntity<TCreateModel, TReadModel>(user, createModel);
+            var result = await mediator.InvokeAsync<Result<TReadModel>>(command, cancellationToken).ConfigureAwait(false);
+
+            return TypedResults.Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error CreateCommand: {ErrorMessage}", ex.Message);
+
+            var details = ex.ToProblemDetails();
+            return TypedResults.Problem(details);
+        }
+    }
+
+    /// <summary>
+    /// Updates an existing entity using the provided update model and the mediator service.
+    /// </summary>
+    /// <param name="mediator">The <see cref="IMediator"/> to send the request to.</param>
+    /// <param name="id">The identifier of the entity to update.</param>
+    /// <param name="updateModel">The model containing updated data for the entity.</param>
+    /// <param name="user">The current security claims principal.</param>
+    /// <param name="cancellationToken">The request cancellation token.</param>
+    /// <returns>
+    /// An awaitable task returning either <see cref="Ok{TReadModel}"/> with the updated entity or <see cref="ProblemHttpResult"/> on error.
+    /// </returns>
+    protected virtual async Task<Results<Ok<TReadModel>, ProblemHttpResult>> UpdateCommand(
+        [FromServices] IMediator mediator,
+        [FromRoute] TKey id,
+        [FromBody] TUpdateModel updateModel,
+        ClaimsPrincipal? user = default,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var command = new UpdateEntity<TKey, TUpdateModel, TReadModel>(user, id, updateModel, true);
+            var result = await mediator.InvokeAsync<Result<TReadModel>>(command, cancellationToken).ConfigureAwait(false);
+
+            return TypedResults.Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error UpdateCommand: {ErrorMessage}", ex.Message);
+
+            var details = ex.ToProblemDetails();
+            return TypedResults.Problem(details);
+        }
+    }
+
+    /// <summary>
+    /// Deletes an existing entity by its identifier using the mediator service.
+    /// </summary>
+    /// <param name="mediator">The <see cref="IMediator"/> to send the request to.</param>
+    /// <param name="id">The identifier of the entity to delete.</param>
+    /// <param name="user">The current security claims principal.</param>
+    /// <param name="cancellationToken">The request cancellation token.</param>
+    /// <returns>
+    /// An awaitable task returning either <see cref="Ok{TReadModel}"/> with the deleted entity or <see cref="ProblemHttpResult"/> on error.
+    /// </returns>
+    protected virtual async Task<Results<Ok<TReadModel>, ProblemHttpResult>> DeleteCommand(
+        [FromServices] IMediator mediator,
+        [FromRoute] TKey id,
+        ClaimsPrincipal? user = default,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var command = new DeleteEntity<TKey, TReadModel>(user, id);
+            var result = await mediator.InvokeAsync<Result<TReadModel>>(command, cancellationToken).ConfigureAwait(false);
+
+            return TypedResults.Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error DeleteCommand: {ErrorMessage}", ex.Message);
+
+            var details = ex.ToProblemDetails();
+            return TypedResults.Problem(details);
+        }
+    }
+}

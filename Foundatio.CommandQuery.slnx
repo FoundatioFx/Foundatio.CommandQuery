@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Build/">
+    <File Path=".github/workflows/build.yml" />
     <File Path="Directory.Build.props" />
     <File Path="README.md" />
   </Folder>
@@ -10,6 +11,8 @@
   </Folder>
   <Project Path="../Foundatio.Mediator/src/Foundatio.Mediator.Abstractions/Foundatio.Mediator.Abstractions.csproj" />
   <Project Path="../Foundatio.Mediator/src/Foundatio.Mediator/Foundatio.Mediator.csproj" />
+  <Project Path="src/Foundatio.CommandQuery.Dispatcher/Foundatio.CommandQuery.Dispatcher.csproj" Id="817ec0dc-4421-48b7-b60e-1ec6ac3f3622" />
+  <Project Path="src/Foundatio.CommandQuery.Endpoints/Foundatio.CommandQuery.Endpoints.csproj" Id="012fcc75-7bfd-48c4-8712-98f8ea057d07" />
   <Project Path="src/Foundatio.CommandQuery.EntityFramework/Foundatio.CommandQuery.EntityFramework.csproj" Id="94dc262e-6e49-4ad4-9767-7c25a0c4065e" />
   <Project Path="src/Foundatio.CommandQuery.MongoDB/Foundatio.CommandQuery.MongoDB.csproj" Id="7252b936-1787-43f3-867c-0f2727abff4a" />
   <Project Path="src/Foundatio.CommandQuery/Foundatio.CommandQuery.csproj" Id="1e67f0dc-5ce8-4d5e-a61e-3f92b7aeb512" />

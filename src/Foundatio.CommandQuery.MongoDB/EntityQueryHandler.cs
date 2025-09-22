@@ -31,6 +31,9 @@ public abstract class EntityQueryHandler<TEntity, TKey, TReadModel>
             .FirstOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
 
+        if (result == null)
+            return Result<TReadModel>.NotFound($"Entity with id '{request.Id}' not found.");
+
         // convert entity to read model
         var readModel = Mapper.Map<TEntity, TReadModel>(result);
         if (readModel == null)
