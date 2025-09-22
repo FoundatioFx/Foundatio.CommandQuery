@@ -40,6 +40,7 @@ public abstract record PrincipalCommand
     /// <value>
     /// The timestamp indicating when this command was activated.
     /// </value>
+    [JsonIgnore]
     public DateTimeOffset Activated { get; }
 
     /// <summary>
@@ -53,5 +54,6 @@ public abstract record PrincipalCommand
     /// If the <see cref="Principal"/> is <see langword="null"/>, the value defaults to "system".
     /// </remarks>
     /// <see cref="ClaimsIdentity.Name"/>
+    [JsonIgnore]
     public string? ActivatedBy { get; }
 }

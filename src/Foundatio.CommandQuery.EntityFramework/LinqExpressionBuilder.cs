@@ -1,5 +1,4 @@
 using System.Text;
-using System.Xml.Linq;
 
 using Foundatio.CommandQuery.Queries;
 
@@ -71,51 +70,57 @@ public class LinqExpressionBuilder
     /// Expression will be updated with the generated LINQ expression.
     /// Parameters will also be updated with the values used in the expression.
     /// </summary>
-    /// <param name="queryRule">The query rule to build the expression from.</param>
-    public void Build(QueryFilter? queryRule)
+    /// <param name="queryFilter">The query rule to build the expression from.</param>
+    public void Build(QueryFilter? queryFilter)
     {
         _expression.Length = 0;
         _values.Clear();
 
-        if (queryRule == null)
+        if (queryFilter == null)
             return;
 
-        Visit(queryRule);
+        Visit(queryFilter);
     }
 
     /// <summary>
     /// Visits the specified <see cref="QueryFilter"/> and writes its expression.
     /// </summary>
-    /// <param name="queryRule">The query rule to visit.</param>
-    private void Visit(QueryFilter queryRule)
+    /// <param name="queryFilter">The query rule to visit.</param>
+    private void Visit(QueryFilter queryFilter)
     {
-        if (queryRule == null)
+        if (queryFilter == null)
             return;
 
-        if (queryRule.IsGroup())
-            WriteGroup(queryRule);
-        else if (queryRule is QueryFilter filter)
-            WriteExpression(filter);
+        if (queryFilter.IsGroup())
+            WriteGroup(queryFilter);
+        else
+            WriteExpression(queryFilter);
     }
 
     /// <summary>
     /// Writes a group expression for the specified <see cref="QueryFilter"/>.
     /// </summary>
-    /// <param name="entityFilter">The query group to write.</param>
-    private void WriteGroup(QueryFilter entityFilter)
+    /// <param name="queryFilter">The query group to write.</param>
+    private void WriteGroup(QueryFilter queryFilter)
     {
-        var filters = entityFilter.Filters;
+        if (!queryFilter.IsValid())
+            return;
+
+        var filters = queryFilter.Filters;
 
         if (filters == null || filters.Count == 0)
             return;
 
-        var logic = entityFilter.Logic == QueryLogic.Or ? "||" : "&&";
+        var logic = queryFilter.Logic == QueryLogic.Or ? "||" : "&&";
 
         var wroteFirst = false;
 
         _expression.Append('(');
         foreach (var filter in filters)
         {
+            if (filter?.IsValid() != true)
+                continue;
+
             if (wroteFirst)
                 _expression.Append(' ').Append(logic).Append(' ');
 
@@ -128,20 +133,19 @@ public class LinqExpressionBuilder
     /// <summary>
     /// Writes an expression for the specified <see cref="QueryFilter"/>.
     /// </summary>
-    /// <param name="filter">The query filter to write.</param>
-    private void WriteExpression(QueryFilter filter)
+    /// <param name="queryFilter">The query filter to write.</param>
+    private void WriteExpression(QueryFilter queryFilter)
     {
-        // Field required for expression
-        if (string.IsNullOrWhiteSpace(filter.Name))
+        if (!queryFilter.IsValid())
             return;
 
         // default comparison equal
-        var comparison = filter.Operator ?? QueryOperators.Equal;
+        var comparison = queryFilter.Operator ?? QueryOperators.Equal;
 
         if (_filterWriters.TryGetValue(comparison, out var action))
-            action(_expression, _values, filter);
+            action(_expression, _values, queryFilter);
         else
-            WriteStandardFilter(_expression, _values, filter);
+            WriteStandardFilter(_expression, _values, queryFilter);
     }
 
 

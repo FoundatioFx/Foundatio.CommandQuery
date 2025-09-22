@@ -2,6 +2,8 @@ using AwesomeAssertions;
 
 using Foundatio.CommandQuery.Queries;
 
+using Microsoft.EntityFrameworkCore.Internal;
+
 namespace Foundatio.CommandQuery.EntityFramework.Tests;
 
 public class LinqExpressionBuilderTests
@@ -497,9 +499,8 @@ public class LinqExpressionBuilderTests
         builder.Build(filter);
 
         // Assert
-        builder.Expression.Should().Be("Field == @0");
-        builder.Parameters.Should().HaveCount(1);
-        builder.Parameters[0].Should().BeNull();
+        builder.Expression.Should().BeNullOrEmpty();
+        builder.Parameters.Should().BeEmpty();
     }
 
     [Fact]
@@ -539,6 +540,39 @@ public class LinqExpressionBuilderTests
         builder.Parameters[1].Should().Be(18);
         builder.Parameters[2].Should().BeEquivalentTo(expectedArray);
         builder.Parameters[3].Should().Be("High");
+    }
+
+    [Fact]
+    public void Build_WithComplexEmptyFilters_IgnoresEmptyFiltersInGroup()
+    {
+        // Arrange
+        var entityFilter = new QueryFilter
+        {
+            Filters =
+            [
+                new QueryFilter{ Name = "Rank", Operator = QueryOperators.GreaterThan, Value = 5 },
+                new QueryFilter
+                {
+                    Logic = QueryLogic.Or,
+                    Filters =
+                    [
+                        new QueryFilter(),
+                        new QueryFilter()
+                    ]
+                }
+            ]
+        };
+
+        var builder = new LinqExpressionBuilder();
+        builder.Build(entityFilter);
+
+        // Act
+        builder.Expression.Should().NotBeEmpty();
+        builder.Expression.Should().Be("(Rank > @0)");
+
+        // Assert
+        builder.Parameters.Count.Should().Be(1);
+        builder.Parameters[0].Should().Be(5);
     }
 
     #endregion

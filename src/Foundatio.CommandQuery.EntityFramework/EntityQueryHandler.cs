@@ -104,7 +104,7 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
         var query = DataContext
             .Set<TEntity>()
             .AsNoTracking()
-            .TagWith($"EntityPagedQueryHandler; Context:{typeof(TContext).Name}, Entity:{typeof(TEntity).Name}, Model:{typeof(TReadModel).Name}");
+            .TagWith($"QueryEntities; Context:{typeof(TContext).Name}, Entity:{typeof(TEntity).Name}, Model:{typeof(TReadModel).Name}");
 
         var queryDefinition = request.Query;
 
@@ -136,12 +136,10 @@ public abstract class EntityQueryHandler<TContext, TEntity, TKey, TReadModel>
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        var queryResult = new QueryResult<TReadModel>
+        return new QueryResult<TReadModel>
         {
             Total = total,
             Data = results
         };
-
-        return queryResult;
     }
 }

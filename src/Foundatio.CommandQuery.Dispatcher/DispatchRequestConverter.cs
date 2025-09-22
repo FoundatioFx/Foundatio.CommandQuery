@@ -43,6 +43,7 @@ public class DispatchRequestConverter : JsonConverter<DispatchRequest>
         if (instance is null)
             throw new JsonException($"JsonReader could not deserialize type {requestType}");
 
+        reader.Read();
         if (reader.TokenType != JsonTokenType.EndObject)
             throw new JsonException("Unexpected end when reading JSON.");
 
