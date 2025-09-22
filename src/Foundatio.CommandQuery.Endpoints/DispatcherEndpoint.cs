@@ -72,7 +72,7 @@ public partial class DispatcherEndpoint : IEndpointRoute
 
         try
         {
-            var result = await mediator.InvokeAsync(request, cancellationToken).ConfigureAwait(false);
+            var result = await mediator.InvokeAsync<object>(request, cancellationToken).ConfigureAwait(false);
             return TypedResults.Ok(result);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
