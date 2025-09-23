@@ -5,7 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+  
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <InterceptorsNamespaces>$(InterceptorsNamespaces);Foundatio.Mediator</InterceptorsNamespaces>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Foundatio.Mediator\src\Foundatio.Mediator\Foundatio.Mediator.csproj">
       <OutputItemType>Analyzer</OutputItemType>
