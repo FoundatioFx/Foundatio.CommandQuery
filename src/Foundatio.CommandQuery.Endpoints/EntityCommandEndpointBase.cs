@@ -80,8 +80,8 @@ public abstract class EntityCommandEndpointBase<TKey, TListModel, TReadModel, TC
             .ProducesValidationProblem()
             .WithTags(EntityName)
             .WithName($"Update{EntityName}")
-            .WithSummary("Update entity")
-            .WithDescription("Update entity");
+            .WithSummary("Update an existing entity")
+            .WithDescription("Update an existing entity");
 
         group
             .MapDelete("{id}", DeleteCommand)
@@ -89,8 +89,8 @@ public abstract class EntityCommandEndpointBase<TKey, TListModel, TReadModel, TC
             .ProducesValidationProblem()
             .WithTags(EntityName)
             .WithName($"Delete{EntityName}")
-            .WithSummary("Delete entity")
-            .WithDescription("Delete entity");
+            .WithSummary("Delete an existing entity")
+            .WithDescription("Delete an existing entity");
     }
 
     /// <summary>

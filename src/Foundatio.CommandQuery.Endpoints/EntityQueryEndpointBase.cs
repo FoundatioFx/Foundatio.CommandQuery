@@ -80,7 +80,7 @@ public abstract class EntityQueryEndpointBase<TKey, TListModel, TReadModel> : IE
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .ProducesValidationProblem()
             .WithTags(EntityName)
-            .WithName($"Query{EntityName}")
+            .WithName($"GetQuery{EntityName}")
             .WithSummary("Get entities by query")
             .WithDescription("Get entities by query");
 
@@ -89,7 +89,7 @@ public abstract class EntityQueryEndpointBase<TKey, TListModel, TReadModel> : IE
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .ProducesValidationProblem()
             .WithTags(EntityName)
-            .WithName($"Query{EntityName}")
+            .WithName($"PostQuery{EntityName}")
             .WithSummary("Get entities by query")
             .WithDescription("Get entities by query");
     }
