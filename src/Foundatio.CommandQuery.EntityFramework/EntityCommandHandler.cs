@@ -179,7 +179,7 @@ public abstract class EntityCommandHandler<TContext, TEntity, TKey, TReadModel, 
         var query = DataContext
             .Set<TEntity>()
             .AsNoTracking()
-            .TagWith($"UpdateEntity; Context:{_contextName}, Entity:{_entityName}, Model:{_modelName}")
+            .TagWith($"DeleteEntity; Context:{_contextName}, Entity:{_entityName}, Model:{_modelName}")
             .TagWithCallSite()
             .Where(p => Equals(p.Id, entity.Id));
 

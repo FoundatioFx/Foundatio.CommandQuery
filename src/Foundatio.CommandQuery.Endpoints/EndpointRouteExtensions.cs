@@ -19,8 +19,8 @@ public static class EndpointRouteExtensions
         services.AddHttpContextAccessor();
         //services.TryAddScoped<IBaseAddressResolver, BaseAddressResolver>();
 
-        //// allow duplicates
-        //services.AddSingleton<IEndpointRoute, DispatcherEndpoint>();
+        // allow duplicates
+        services.AddSingleton<IEndpointRoute, DispatcherEndpoint>();
 
         return services;
     }

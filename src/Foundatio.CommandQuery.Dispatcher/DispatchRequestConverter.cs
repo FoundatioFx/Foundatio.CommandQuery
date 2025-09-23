@@ -64,7 +64,7 @@ public class DispatchRequestConverter : JsonConverter<DispatchRequest>
 
         if (string.IsNullOrEmpty(value.Type))
         {
-            value.Type = value.Request?.GetType().AssemblyQualifiedName
+            value.Type = value.Request.GetType().AssemblyQualifiedName
                 ?? throw new ArgumentException("Type property cannot be null or empty.", nameof(value));
         }
 

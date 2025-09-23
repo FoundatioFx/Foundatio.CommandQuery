@@ -32,36 +32,6 @@ namespace Foundatio.CommandQuery.Dispatcher;
 /// Change tracking is performed by comparing hash codes between the current model state and the last saved state.
 /// </para>
 /// </remarks>
-/// <example>
-/// <code>
-/// // Create a state manager for User entities with int keys
-/// var userEditState = new ModelStateEditor&lt;int, UserReadModel, UserUpdateModel&gt;(dataService, mapper);
-///
-/// // Subscribe to state changes for UI updates
-/// userEditState.OnStateChanged += (sender, args) => StateHasChanged();
-///
-/// // Load a user for editing
-/// await userEditState.Load(123);
-///
-/// // Check if user is currently being loaded
-/// if (userEditState.IsBusy)
-/// {
-///     // Show loading indicator
-/// }
-///
-/// // Check if user has unsaved changes
-/// if (userEditState.IsDirty)
-/// {
-///     // Show save/discard options
-/// }
-///
-/// // Save changes
-/// await userEditState.Save();
-///
-/// // Delete the user
-/// await userEditState.Delete();
-/// </code>
-/// </example>
 public class EditStateManager<TKey, TReadModel, TUpdateModel> : StateManager<TUpdateModel>
     where TKey : notnull
     where TReadModel : class, IHaveIdentifier<TKey>, new()

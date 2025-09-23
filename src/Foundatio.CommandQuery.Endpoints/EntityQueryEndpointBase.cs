@@ -85,7 +85,7 @@ public abstract class EntityQueryEndpointBase<TKey, TListModel, TReadModel> : IE
             .WithDescription("Get entities by query");
 
         group
-            .MapPost("", PostQuery)
+            .MapPost("query", PostQuery)
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             .ProducesValidationProblem()
             .WithTags(EntityName)

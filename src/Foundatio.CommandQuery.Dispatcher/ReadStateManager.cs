@@ -14,28 +14,6 @@ namespace Foundatio.CommandQuery.Dispatcher;
 /// busy state tracking, and change notifications inherited from the base <see cref="StateManager{TModel}"/> class.
 /// This is particularly useful in Blazor applications where components need to react to data loading states.
 /// </remarks>
-/// <example>
-/// <code>
-/// // Create a state manager for User entities with string keys
-/// var userState = new ModelStateLoader&lt;string, User&gt;(dataService);
-///
-/// // Subscribe to state changes
-/// userState.OnStateChanged += (sender, args) => StateHasChanged();
-///
-/// // Load a user by ID
-/// await userState.Load("user123");
-///
-/// // Check if loading is in progress
-/// if (userState.IsBusy)
-/// {
-///     // Show loading indicator
-/// }
-/// else if (userState.Model != null)
-/// {
-///     // Display the loaded user data
-/// }
-/// </code>
-/// </example>
 public class ReadStateManager<TKey, TModel> : StateManager<TModel>
     where TModel : class, IHaveIdentifier<TKey>, new()
 {

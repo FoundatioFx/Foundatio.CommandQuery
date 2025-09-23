@@ -161,6 +161,7 @@ public class LinqExpressionBuilder
         if (string.IsNullOrWhiteSpace(filter.Name))
             return;
 
+        // next query parameter index
         int index = parameters.Count;
 
         var field = filter.Name;
@@ -185,6 +186,7 @@ public class LinqExpressionBuilder
             _ => false
         };
 
+        // string operations require a null check first
         builder
             .Append(field)
             .Append(" != NULL && ");
@@ -192,6 +194,7 @@ public class LinqExpressionBuilder
         if (negation)
             builder.Append('!');
 
+        // invoke method on string, {fieldName}.{method}(@{parameter})
         builder
             .Append(field)
             .Append('.')
@@ -215,6 +218,7 @@ public class LinqExpressionBuilder
         if (string.IsNullOrWhiteSpace(filter.Name))
             return;
 
+        // next query parameter index
         int index = parameters.Count;
 
         var field = filter.Name;
@@ -231,6 +235,7 @@ public class LinqExpressionBuilder
             _ => "=="
         };
 
+        // standard comparison, {fieldName} {operator} @{parameter}
         builder
             .Append(field)
             .Append(' ')
@@ -253,10 +258,7 @@ public class LinqExpressionBuilder
         if (string.IsNullOrWhiteSpace(filter.Name))
             return;
 
-        int index = parameters.Count;
-
         var field = filter.Name;
-        var value = filter.Value;
 
         var comparison = filter.Operator switch
         {
@@ -265,6 +267,7 @@ public class LinqExpressionBuilder
             _ => "=="
         };
 
+        // dynamic linq null check required operator, {fieldName} {operator} NULL.  NOTE: IS NULL not supported.
         builder
             .Append(field)
             .Append(' ')
@@ -272,12 +275,19 @@ public class LinqExpressionBuilder
             .Append(" NULL");
     }
 
+    /// <summary>
+    /// Writes a raw expression filter for the specified <see cref="QueryFilter"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/> to append to.</param>
+    /// <param name="parameters">The parameter list to add values to.</param>
+    /// <param name="filter">The query filter to write.</param>
     private static void WriteRawExpression(StringBuilder builder, List<object?> parameters, QueryFilter filter)
     {
         // Field required for expression
         if (string.IsNullOrWhiteSpace(filter.Name))
             return;
 
+        // next query parameter index
         int index = parameters.Count;
 
         var field = filter.Name;
@@ -286,17 +296,25 @@ public class LinqExpressionBuilder
         // fix up parameter index if used multiple times
         var expression = index == 0 ? field : field.Replace("@0", $"@{index}", StringComparison.OrdinalIgnoreCase);
 
+        // use raw expression directly, must be supported by dynamic linq
         builder.Append(expression);
 
         parameters.Add(value);
     }
 
+    /// <summary>
+    /// Writes an "in" filter expression (e.g., field IN (...) ) for the specified <see cref="QueryFilter"/>.
+    /// </summary>
+    /// <param name="builder">The <see cref="StringBuilder"/> to append to.</param>
+    /// <param name="parameters">The parameter list to add values to.</param>
+    /// <param name="filter">The query filter to write.</param>
     private static void WriteInFilter(StringBuilder builder, List<object?> parameters, QueryFilter filter)
     {
         // Field required for expression
         if (string.IsNullOrWhiteSpace(filter.Name))
             return;
 
+        // next query parameter index
         int index = parameters.Count;
 
         var field = filter.Name;
@@ -306,6 +324,7 @@ public class LinqExpressionBuilder
         if (negation)
             builder.Append('!');
 
+        // dynamic linq requires the "it." prefix for collections
         builder
             .Append("it.")
             .Append(field)

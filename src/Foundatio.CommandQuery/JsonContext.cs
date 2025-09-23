@@ -4,8 +4,7 @@ using Foundatio.CommandQuery.Queries;
 
 namespace Foundatio.CommandQuery;
 
-[JsonSourceGenerationOptions(
-    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 [JsonSerializable(typeof(QueryDefinition))]
 [JsonSerializable(typeof(QuerySort))]
 [JsonSerializable(typeof(List<QuerySort>))]

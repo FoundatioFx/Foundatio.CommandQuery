@@ -10,13 +10,6 @@ namespace Foundatio.CommandQuery.Dispatcher;
 /// changes to a model and notify subscribers when the state changes. This is particularly useful in
 /// UI scenarios where components need to react to data changes.
 /// </remarks>
-/// <example>
-/// <code>
-/// var userState = new StateModel&lt;User&gt;();
-/// userState.OnStateChanged += (sender, args) => Console.WriteLine("User state changed");
-/// userState.Set(new User { Name = "John Doe" });
-/// </code>
-/// </example>
 public class StateManager<TModel>
     where TModel : new()
 {
