@@ -1,0 +1,133 @@
+07:48:46.697 [I] Now listening on: https://localhost:7003
+07:48:46.708 [I] Now listening on: http://localhost:5148
+07:48:46.734 [I] Application started. Press Ctrl+C to shut down.
+07:48:46.735 [I] Hosting environment: Development
+07:48:46.736 [I] Content root path: D:\Projects\github\Arbiter\samples\MongoDB\Tracker.WebService
+07:48:47.633 [I] Loaded 1 valid security API keys from configuration.
+07:48:47.640 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:47.673 [I] HTTP GET /scalar/v1 responded 200 in 30.8137 ms
+07:48:47.689 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:47.689 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:47.709 [I] HTTP GET /scalar/scalar.aspnetcore.js responded 200 in 15.6290 ms
+07:48:47.729 [I] HTTP GET /scalar/scalar.js responded 200 in 39.3333 ms
+07:48:48.680 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:48.785 [I] HTTP GET /openapi/v1.json responded 200 in 104.0008 ms
+07:48:48.786 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:48.810 [I] HTTP GET /openapi/v1.json responded 200 in 22.1571 ms
+07:48:49.108 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:48:49.112 [I] HTTP GET /favicon.ico responded 404 in 3.3320 ms
+07:49:00.824 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:49:00.828 [I] AuthenticationScheme: SecurityKey was challenged.
+07:49:16.878 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+07:49:16.915 [E] Error GetQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetQuery(IMediator mediator, TKey id, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 141
+07:49:16.921 [E] HTTP GET /api/Priority/607a27d77d1e32895e494a95 responded 500 in 41.6799 ms
+07:49:30.569 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+07:49:30.595 [E] Error GetPagedQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetPagedQuery(IMediator mediator, String q, String sort, Nullable`1 page, Nullable`1 size, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 181
+07:49:30.597 [E] HTTP GET /api/Priority/page responded 500 in 25.8664 ms
+07:49:36.816 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+07:49:36.844 [E] Error PostPagedQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.PostPagedQuery(IMediator mediator, EntityQuery entityQuery, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 215
+07:49:36.846 [E] HTTP POST /api/Priority/page responded 500 in 29.1224 ms
+07:49:42.309 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+07:49:42.332 [E] Error GetSelectQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntitySelectQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntitySelectQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetSelectQuery(IMediator mediator, String q, String sort, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 253
+07:49:42.334 [E] HTTP GET /api/Priority responded 500 in 23.5927 ms
+07:52:07.438 [I] Now listening on: https://localhost:7003
+07:52:07.448 [I] Now listening on: http://localhost:5148
+07:52:07.469 [I] Application started. Press Ctrl+C to shut down.
+07:52:07.470 [I] Hosting environment: Development
+07:52:07.470 [I] Content root path: D:\Projects\github\Arbiter\samples\MongoDB\Tracker.WebService
+07:52:08.056 [I] Loaded 1 valid security API keys from configuration.
+07:52:08.063 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:52:08.096 [I] HTTP GET /scalar/v1 responded 200 in 29.9350 ms
+07:52:08.106 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:52:08.106 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:52:08.143 [I] HTTP GET /scalar/scalar.aspnetcore.js responded 304 in 35.4509 ms
+07:52:08.143 [I] HTTP GET /scalar/scalar.js responded 304 in 4.9465 ms
+07:52:09.086 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:52:09.197 [D] AuthenticationScheme: SecurityKey was not authenticated.
+07:52:09.199 [I] HTTP GET /openapi/v1.json responded 200 in 110.7301 ms
+07:52:09.220 [I] HTTP GET /openapi/v1.json responded 200 in 21.8294 ms
+07:52:14.414 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+07:52:14.457 [E] Error GetQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetQuery(IMediator mediator, TKey id, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 141
+07:52:14.464 [E] HTTP GET /api/Priority/607a27d77d1e32895e494a95 responded 500 in 47.2663 ms
+09:20:24.583 [I] Now listening on: https://localhost:7003
+09:20:24.593 [I] Now listening on: http://localhost:5148
+09:20:24.653 [I] Application started. Press Ctrl+C to shut down.
+09:20:24.654 [I] Hosting environment: Development
+09:20:24.654 [I] Content root path: D:\Projects\github\Arbiter\samples\MongoDB\Tracker.WebService
+09:20:25.515 [I] Loaded 1 valid security API keys from configuration.
+09:20:25.523 [D] AuthenticationScheme: SecurityKey was not authenticated.
+09:20:25.556 [I] HTTP GET /scalar/v1 responded 200 in 30.1014 ms
+09:20:25.575 [D] AuthenticationScheme: SecurityKey was not authenticated.
+09:20:25.599 [D] AuthenticationScheme: SecurityKey was not authenticated.
+09:20:25.610 [I] HTTP GET /scalar/scalar.aspnetcore.js responded 304 in 10.0038 ms
+09:20:25.610 [I] HTTP GET /scalar/scalar.js responded 304 in 9.1206 ms
+09:20:26.411 [D] AuthenticationScheme: SecurityKey was not authenticated.
+09:20:26.511 [I] HTTP GET /openapi/v1.json responded 200 in 98.7670 ms
+09:20:26.511 [D] AuthenticationScheme: SecurityKey was not authenticated.
+09:20:26.535 [I] HTTP GET /openapi/v1.json responded 200 in 22.6867 ms
+09:20:38.202 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+09:20:38.239 [E] Error GetQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityIdentifierQuery`2[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetQuery(IMediator mediator, TKey id, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 141
+09:20:38.247 [E] HTTP GET /api/Priority/607a27d77d1e32895e494a95 responded 500 in 42.9708 ms
+09:20:49.997 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+09:20:50.022 [E] Error GetPagedQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntityPagedQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetPagedQuery(IMediator mediator, String q, String sort, Nullable`1 page, Nullable`1 size, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 181
+09:20:50.024 [E] HTTP GET /api/Priority/page responded 500 in 25.9787 ms
+09:20:53.837 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+09:20:53.860 [E] Error GetSelectQuery: No handler found for message type Arbiter.CommandQuery.Queries.EntitySelectQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Queries.EntitySelectQuery`1[[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityQueryEndpointBase`3.GetSelectQuery(IMediator mediator, String q, String sort, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityQueryEndpointBase.cs:line 253
+09:20:53.862 [E] HTTP GET /api/Priority responded 500 in 24.0946 ms
+09:21:05.623 [D] AuthenticationScheme: SecurityKey was successfully authenticated.
+09:21:05.652 [E] Error CreateCommand: No handler found for message type Arbiter.CommandQuery.Commands.EntityCreateCommand`2[[Tracker.WebService.Domain.Models.PriorityCreateModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+System.InvalidOperationException: No handler found for message type Arbiter.CommandQuery.Commands.EntityCreateCommand`2[[Tracker.WebService.Domain.Models.PriorityCreateModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Tracker.WebService.Domain.Models.PriorityReadModel, Tracker.WebService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+   at Foundatio.Mediator.Mediator.<GetInvokeAsyncResponseDelegate>b__13_0(ValueTuple`2 key) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 104
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Foundatio.Mediator.Mediator.GetInvokeAsyncResponseDelegate(Type messageType, Type responseType) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 98
+   at Foundatio.Mediator.Mediator.InvokeAsync[TResponse](Object message, CancellationToken cancellationToken) in /_/src/Foundatio.Mediator.Abstractions/Mediator.cs:line 36
+   at Arbiter.CommandQuery.Endpoints.EntityCommandEndpointBase`5.CreateCommand(IMediator mediator, TCreateModel createModel, ClaimsPrincipal user, CancellationToken cancellationToken) in D:\Projects\github\Arbiter\src\Arbiter.CommandQuery.Endpoints\EntityCommandEndpointBase.cs:line 158
+09:21:05.654 [E] HTTP POST /api/Priority responded 500 in 30.2104 ms

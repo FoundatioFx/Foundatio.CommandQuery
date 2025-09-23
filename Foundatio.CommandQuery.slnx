@@ -4,6 +4,19 @@
     <File Path="Directory.Build.props" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Samples/" />
+  <Folder Name="/Samples/EntityFramework/">
+    <Project Path="samples/EntityFramework/Tracker.Client/Tracker.Client.csproj" />
+    <Project Path="samples/EntityFramework/Tracker.Core/Tracker.Core.csproj" />
+    <Project Path="samples/EntityFramework/Tracker.Database/Tracker.Database.sqlproj" Id="0210d856-b45c-49d0-a208-1eb435cbb3f1">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="samples/EntityFramework/Tracker.Host/Tracker.Host.csproj" />
+    <Project Path="samples/EntityFramework/Tracker.Service/Tracker.Service.csproj" />
+    <Project Path="samples/EntityFramework/Tracker.Shared/Tracker.Shared.csproj" />
+    <Project Path="samples/EntityFramework/Tracker.Web/Tracker.Web.csproj" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/Foundatio.CommandQuery.Dispatcher.Tests/Foundatio.CommandQuery.Dispatcher.Tests.csproj" Id="e2b348b0-8337-4d9f-ad43-a9cf5e13abd6" />
     <Project Path="tests/Foundatio.CommandQuery.Endpoints.Tests/Foundatio.CommandQuery.Endpoints.Tests.csproj" Id="7349ebc3-b53d-4b7a-8f88-6bbfe75e6e7c" />

@@ -92,12 +92,14 @@ public class DispatcherDataService : IDispatcherDataService
     /// <inheritdoc/>
     public async ValueTask<QueryResult<TModel>> Query<TModel>(
         QueryDefinition? query = null,
+        TimeSpan? cacheTime = null,
         CancellationToken cancellationToken = default)
         where TModel : class
     {
         var user = await GetUser(cancellationToken).ConfigureAwait(false);
 
         var command = new QueryEntities<TModel>(user, query);
+        command.Cache(cacheTime);
 
         var result = await Dispatcher
             .Send<QueryResult<TModel>>(command, cancellationToken)
@@ -120,7 +122,7 @@ public class DispatcherDataService : IDispatcherDataService
 
         query.Filter = QueryBuilder.Group(query?.Filter, searchFilter);
 
-        return await Query<TModel>(query, cancellationToken);
+        return await Query<TModel>(query, cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>

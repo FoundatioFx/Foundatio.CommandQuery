@@ -1,0 +1,105 @@
+@using Foundatio.CommandQuery.Definitions
+@using Foundatio.CommandQuery.Dispatcher
+@using Queries = Foundatio.CommandQuery.Queries
+@using System.Linq.Expressions
+
+@typeparam TModel where TModel : class, IHaveIdentifier<int>, ISupportSearch
+@typeparam TValue
+
+<InputSelect TValue="TValue"
+             DisplayName="@DisplayName"
+             @attributes="AdditionalAttributes"
+             @bind-Value:get="Value"
+             @bind-Value:set="OnValueChanged">
+    <option value="">- select -</option>
+    @foreach (var item in Items)
+    {
+        <option @key="item.Id"
+                value="@ConvertValue(item)">
+            @item.ToString()
+        </option>
+    }
+</InputSelect>
+
+@code {
+    [Inject]
+    public required NotificationService Notification { get; set; }
+
+    [Inject]
+    public required DataService DataService { get; set; }
+
+    [Parameter]
+    public string? DisplayName { get; set; }
+
+    [Parameter]
+    public TValue? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TValue> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<TValue>>? ValueExpression { get; set; }
+
+    [Parameter]
+    public Func<TModel, string>? ConvertMethod { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
+    public string? Sort { get; set; }
+
+    [Parameter]
+    public Queries.QueryFilter? Filter { get; set; }
+
+    [Parameter]
+    public TimeSpan? CacheTime { get; set; }
+
+    protected IReadOnlyCollection<TModel> Items { get; set; } = [];
+
+
+    private async Task OnValueChanged(TValue? value)
+    {
+        if (ValueChanged.HasDelegate)
+            await this.ValueChanged.InvokeAsync(value);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Items = await LoadData();
+    }
+
+    protected async Task<IReadOnlyCollection<TModel>> LoadData()
+    {
+        try
+        {
+            var sort = Queries.QuerySort.Parse(Sort ?? TModel.SortField());
+            var select = new Queries.QueryDefinition { Sorts = [], Filter = Filter };
+
+            if (sort != null)
+                select.Sorts.Add(sort);
+
+            var result = await DataService.Query<TModel>(select, CacheTime);
+
+            return result?.Data ?? [];
+        }
+        catch (Exception ex)
+        {
+            Notification.ShowError(ex);
+            return [];
+        }
+        finally
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private string ConvertValue(TModel model)
+    {
+        if (ConvertMethod != null)
+            return ConvertMethod(model);
+
+        return model.Id.ToString();
+    }
+}

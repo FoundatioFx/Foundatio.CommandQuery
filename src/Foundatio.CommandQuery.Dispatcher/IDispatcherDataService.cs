@@ -64,10 +64,12 @@ public interface IDispatcherDataService
     /// </summary>
     /// <typeparam name="TModel">Type of the model.</typeparam>
     /// <param name="query">Query definition for filtering, sorting, and paging.</param>
+    /// <param name="cacheTime">Optional cache duration for the result.</param>
     /// <param name="cancellationToken">Token to cancel the request.</param>
     /// <returns>A task that returns a paged query result for the model type.</returns>
     ValueTask<QueryResult<TModel>> Query<TModel>(
         QueryDefinition? query = null,
+        TimeSpan? cacheTime = null,
         CancellationToken cancellationToken = default)
         where TModel : class;
 
