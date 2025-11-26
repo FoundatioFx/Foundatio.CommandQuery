@@ -1,10 +1,8 @@
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 
-using Foundatio.CommandQuery.Definitions;
 using System.Linq.Expressions;
 
 using Entities = Foundatio.CommandQuery.EntityFramework.Tests.Data.Entities;
-using Models = Foundatio.CommandQuery.EntityFramework.Tests.Domain.Models;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Domain.Mapping;
 

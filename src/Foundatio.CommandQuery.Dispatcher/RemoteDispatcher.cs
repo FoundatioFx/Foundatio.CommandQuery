@@ -3,7 +3,6 @@ using System.Text.Json;
 
 using Foundatio.CommandQuery.Definitions;
 using Foundatio.CommandQuery.Extensions;
-using Foundatio.CommandQuery.Models;
 
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;

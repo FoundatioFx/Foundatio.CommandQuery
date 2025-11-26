@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using AwesomeAssertions;
-using Foundatio.CommandQuery.Definitions;
+
 using Foundatio.CommandQuery.Queries;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests;

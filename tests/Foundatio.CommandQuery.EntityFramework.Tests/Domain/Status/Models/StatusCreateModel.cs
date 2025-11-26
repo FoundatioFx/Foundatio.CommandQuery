@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Domain.Models;
 
 public partial class StatusCreateModel

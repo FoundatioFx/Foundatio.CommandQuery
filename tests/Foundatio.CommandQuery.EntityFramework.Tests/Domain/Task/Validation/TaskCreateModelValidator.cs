@@ -1,5 +1,3 @@
-using System;
-using FluentValidation;
 using Foundatio.CommandQuery.EntityFramework.Tests.Domain.Models;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Domain.Validation;

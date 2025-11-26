@@ -7,8 +7,6 @@ using MongoDB.Driver;
 
 using Testcontainers.MongoDb;
 
-using XUnit.Hosting;
-
 namespace Foundatio.CommandQuery.MongoDB.Tests.Fixtures;
 
 public class DatabaseFixture : TestApplicationFixture, IAsyncLifetime

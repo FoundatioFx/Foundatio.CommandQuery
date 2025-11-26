@@ -1,8 +1,9 @@
 using System.Security.Claims;
 using System.Text.Json;
+
 using Foundatio.CommandQuery.Commands;
-using Foundatio.CommandQuery.Models;
 using Foundatio.CommandQuery.Converters;
+using Foundatio.CommandQuery.Models;
 
 namespace Foundatio.CommandQuery.Dispatcher.Tests;
 

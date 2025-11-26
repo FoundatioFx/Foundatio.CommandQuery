@@ -1,8 +1,4 @@
-using AwesomeAssertions;
-
 using Foundatio.CommandQuery.Queries;
-
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests;
 

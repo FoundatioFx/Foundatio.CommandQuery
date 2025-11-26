@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Foundatio.CommandQuery\Foundatio.CommandQuery.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-
-  </ItemGroup>
-
 </Project>

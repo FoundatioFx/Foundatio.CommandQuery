@@ -20,7 +20,7 @@ public class TaskTests(DatabaseFixture databaseFixture) : DatabaseTestBase(datab
 
         int[] statuses = [StatusConstants.Blocked.Id, StatusConstants.InProgress.Id, StatusConstants.NotStarted.Id];
         int[] priorities = [PriorityConstants.High.Id, PriorityConstants.Normal.Id, PriorityConstants.Low.Id];
-        int[] tenants =  [TenantConstants.Battlestar.Id, TenantConstants.Cylons.Id];
+        int[] tenants = [TenantConstants.Battlestar.Id, TenantConstants.Cylons.Id];
 
         var generator = new Faker<TaskCreateModel>()
             .RuleFor(p => p.Title, f => f.Lorem.Sentence())

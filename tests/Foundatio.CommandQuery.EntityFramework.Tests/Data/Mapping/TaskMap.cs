@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Data.Mapping;

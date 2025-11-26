@@ -5,8 +5,6 @@ using Microsoft.Extensions.Hosting;
 
 using Testcontainers.MsSql;
 
-using XUnit.Hosting;
-
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Fixtures;
 
 public class DatabaseFixture : TestApplicationFixture, IAsyncLifetime

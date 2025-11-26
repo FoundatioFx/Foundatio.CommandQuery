@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Foundatio.CommandQuery.EntityFramework.Tests.Data.Entities;
 
 public partial class User
