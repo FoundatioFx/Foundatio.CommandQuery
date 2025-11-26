@@ -15,12 +15,12 @@ public class DatabaseFixture : TestApplicationFixture, IAsyncLifetime
         .WithPassword("Bn87bBYhLjYRj%9zRgUc")
         .Build();
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         await _msSqlContainer.StartAsync();
     }
 
-    public async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         await _msSqlContainer.DisposeAsync();
     }

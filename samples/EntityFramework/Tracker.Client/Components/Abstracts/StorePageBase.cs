@@ -1,7 +1,7 @@
-using Blazored.Modal.Services;
-
 using Foundatio.CommandQuery.Definitions;
 using Foundatio.CommandQuery.Dispatcher;
+
+using LoreSoft.Blazor.Controls;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -14,8 +14,8 @@ public abstract class StorePageBase<TReadModel, TUpdateModel> : PrincipalBase, I
     where TReadModel : class, IHaveIdentifier<int>, new()
     where TUpdateModel : class, new()
 {
-    [CascadingParameter]
-    public required IModalService Modal { get; set; }
+    [Inject]
+    public required ModalService Modal { get; set; }
 
     [Inject]
     public required EditStateManager<int, TReadModel, TUpdateModel> Store { get; set; }

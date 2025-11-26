@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Description>ASP.NET Core Minimal API endpoints for Command Query Responsibility Segregation (CQRS) framework providing HTTP-based command and query execution</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundatio.Mediator\src\Foundatio.Mediator.Abstractions\Foundatio.Mediator.Abstractions.csproj" />
     <ProjectReference Include="..\Foundatio.CommandQuery.Dispatcher\Foundatio.CommandQuery.Dispatcher.csproj" />
   </ItemGroup>
 

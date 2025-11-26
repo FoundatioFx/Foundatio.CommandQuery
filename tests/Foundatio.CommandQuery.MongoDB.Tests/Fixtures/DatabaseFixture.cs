@@ -18,12 +18,12 @@ public class DatabaseFixture : TestApplicationFixture, IAsyncLifetime
         .WithPassword(string.Empty)
         .Build();
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         await _mongoDbContainer.StartAsync();
     }
 
-    public async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         await _mongoDbContainer.DisposeAsync();
     }

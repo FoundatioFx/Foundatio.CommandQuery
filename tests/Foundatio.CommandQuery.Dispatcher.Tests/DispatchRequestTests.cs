@@ -45,7 +45,6 @@ public class DispatchRequestTests
         deserializedCommand.Model.Should().NotBeNull();
         deserializedCommand.Model.Id.Should().Be("test-entity-123");
         deserializedCommand.Model.CreatedBy.Should().Be("test-user");
-        deserializedCommand.Principal.Should().NotBeNull();
     }
 
     [Fact]
@@ -77,7 +76,6 @@ public class DispatchRequestTests
         deserializedCommand.Upsert.Should().BeTrue();
         deserializedCommand.Model.Should().NotBeNull();
         deserializedCommand.Model.UpdatedBy.Should().Be("admin-user");
-        deserializedCommand.Principal.Should().NotBeNull();
     }
 
     [Fact]
@@ -98,7 +96,6 @@ public class DispatchRequestTests
 
         var deserializedCommand = deserializedRequest.Request.Should().BeOfType<DeleteEntity<Guid, EntityReadModel<Guid>>>().Subject;
         deserializedCommand.Id.Should().Be(Guid.Parse("550e8400-e29b-41d4-a716-446655440000"));
-        deserializedCommand.Principal.Should().NotBeNull();
     }
 
     [Fact]
@@ -119,7 +116,6 @@ public class DispatchRequestTests
 
         var deserializedQuery = deserializedRequest.Request.Should().BeOfType<GetEntity<int, EntityReadModel<int>>>().Subject;
         deserializedQuery.Id.Should().Be(12345);
-        deserializedQuery.Principal.Should().NotBeNull();
     }
 
     [Fact]
@@ -157,17 +153,6 @@ public class DispatchRequestTests
         deserializedCommand.Model.CreatedBy.Should().Be("john.doe");
         deserializedCommand.Model.Updated.Should().Be(new DateTimeOffset(2024, 1, 15, 9, 15, 0, TimeSpan.Zero));
         deserializedCommand.Model.UpdatedBy.Should().Be("john.doe");
-
-        // Verify principal is preserved with claims
-        deserializedCommand.Principal.Should().NotBeNull();
-        deserializedCommand.Principal!.Identity!.AuthenticationType.Should().Be("Bearer");
-        deserializedCommand.Principal.FindFirst(ClaimTypes.Name)?.Value.Should().Be("john.doe");
-        deserializedCommand.Principal.FindFirst(ClaimTypes.Email)?.Value.Should().Be("john.doe@example.com");
-        deserializedCommand.Principal.FindFirst(ClaimTypes.Role)?.Value.Should().Be("Admin");
-
-        // Verify activation properties
-        deserializedCommand.ActivatedBy.Should().Be("john.doe");
-        deserializedCommand.Activated.Should().BeCloseTo(DateTimeOffset.UtcNow, TimeSpan.FromMinutes(1));
     }
 
     [Fact]
@@ -186,7 +171,6 @@ public class DispatchRequestTests
         json.Should().Contain("\"type\":");
         json.Should().Contain("\"request\":");
         json.Should().Contain("\"model\":");
-        json.Should().Contain("\"principal\":");
         json.Should().Contain($"\"id\":\"structure-test\"");
         json.Should().Contain("CreateEntity"); // Just check that the type name contains the command name
         json.Should().Contain("EntityCreateModel"); // And the model type
@@ -335,7 +319,6 @@ public class DispatchRequestTests
         finalCommand.Upsert.Should().BeFalse();
         finalCommand.Model.Updated.Should().Be(updateModel.Updated);
         finalCommand.Model.UpdatedBy.Should().Be(updateModel.UpdatedBy);
-        finalCommand.Principal!.FindFirst(ClaimTypes.Name)?.Value.Should().Be("roundtrip.user");
     }
 
     [Fact]

@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
+using Foundatio.CommandQuery.Definitions;
+
 namespace Foundatio.CommandQuery.Abstracts;
 
 /// <summary>
@@ -10,7 +12,7 @@ namespace Foundatio.CommandQuery.Abstracts;
 /// This class is typically used in a CQRS (Command Query Responsibility Segregation) pattern to define commands
 /// that require user context, such as authentication or authorization, provided by a <see cref="ClaimsPrincipal"/>.
 /// </remarks>
-public abstract record PrincipalCommand
+public abstract record PrincipalCommand : IRequestPrincipal
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="PrincipalCommand"/> class.
@@ -30,9 +32,8 @@ public abstract record PrincipalCommand
     /// <value>
     /// The <see cref="ClaimsPrincipal"/> representing the user executing the command.
     /// </value>
-    [JsonPropertyName("principal")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ClaimsPrincipal? Principal { get; }
+    [JsonIgnore]
+    public ClaimsPrincipal? Principal { get; private set; }
 
     /// <summary>
     /// Gets the timestamp indicating when this command was activated.
@@ -41,7 +42,7 @@ public abstract record PrincipalCommand
     /// The timestamp indicating when this command was activated.
     /// </value>
     [JsonIgnore]
-    public DateTimeOffset Activated { get; }
+    public DateTimeOffset Activated { get; private set; }
 
     /// <summary>
     /// Gets the user name of the individual who activated this command.
@@ -55,5 +56,16 @@ public abstract record PrincipalCommand
     /// </remarks>
     /// <see cref="ClaimsIdentity.Name"/>
     [JsonIgnore]
-    public string? ActivatedBy { get; }
+    public string? ActivatedBy { get; private set; }
+
+    /// <summary>
+    /// Applies the specified <see cref="ClaimsPrincipal"/> to the command.
+    /// </summary>
+    /// <param name="principal">The <see cref="ClaimsPrincipal"/> representing the user executing the command.</param>
+    void IRequestPrincipal.ApplyPrincipal(ClaimsPrincipal? principal)
+    {
+        Principal = principal;
+        Activated = DateTimeOffset.UtcNow;
+        ActivatedBy = principal?.Identity?.Name ?? "system";
+    }
 }

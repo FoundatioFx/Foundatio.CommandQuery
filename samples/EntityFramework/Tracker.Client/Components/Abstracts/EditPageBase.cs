@@ -1,5 +1,7 @@
 using Foundatio.CommandQuery.Definitions;
 
+using LoreSoft.Blazor.Controls;
+
 using Microsoft.AspNetCore.Components.Forms;
 
 using Tracker.Client.Extensions;
@@ -82,7 +84,7 @@ public abstract class EditPageBase<TReadModel, TUpdateModel> : StorePageBase<TRe
             if (IsCreate || Store.Model == null)
                 return;
 
-            if (!await Modal.ConfirmDelete($"Are you sure you want to delete {ModelTypeName} '{ModelInstanceName}'?"))
+            if (!await Modal.ConfirmDelete($"{ModelTypeName} '{ModelInstanceName}'"))
                 return;
 
             await Store.Delete();

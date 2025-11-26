@@ -1,5 +1,3 @@
-using Blazored.Modal.Services;
-
 using Foundatio.CommandQuery.Definitions;
 
 using LoreSoft.Blazor.Controls;
@@ -27,8 +25,8 @@ public abstract class ListPageBase<TListModel, TReadModel> : PrincipalBase
         SearchText = new DebounceValue<string>(HandleSearch);
     }
 
-    [CascadingParameter]
-    public required IModalService Modal { get; set; }
+    [Inject]
+    public required ModalService Modal { get; set; }
 
     [Inject]
     public required DataService DataService { get; set; }

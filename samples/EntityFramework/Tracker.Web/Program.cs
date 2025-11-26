@@ -78,6 +78,9 @@ public static class Program
             .AddInteractiveWebAssemblyComponents()
             .AddAuthenticationStateSerialization(options => options.SerializeAllClaims = true);
 
+        services
+            .AddCascadingAuthenticationState();
+
         // authentication
         services
             .AddMicrosoftIdentityWebAppAuthentication(configuration);
@@ -117,10 +120,7 @@ public static class Program
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
             });
 
-        services.Configure<EnvironmentOptions>(options =>
-        {
-            options.EnvironmentName = builder.Environment.EnvironmentName;
-        });
+        services.Configure<EnvironmentOptions>(options => options.EnvironmentName = builder.Environment.EnvironmentName);
 
         // change authentication cookie name
         services

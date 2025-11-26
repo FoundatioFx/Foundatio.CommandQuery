@@ -8,12 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests;
 
-public class StatusTests : DatabaseTestBase
+public class StatusTests(DatabaseFixture databaseFixture) : DatabaseTestBase(databaseFixture)
 {
-    public StatusTests(ITestOutputHelper output, DatabaseFixture databaseFixture)
-        : base(output, databaseFixture)
-    {
-    }
 
     [Fact]
     public async Task FullTest()

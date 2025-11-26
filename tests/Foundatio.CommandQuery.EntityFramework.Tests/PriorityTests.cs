@@ -9,13 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Foundatio.CommandQuery.EntityFramework.Tests;
 
-public class PriorityTests : DatabaseTestBase
+public class PriorityTests(DatabaseFixture databaseFixture) : DatabaseTestBase(databaseFixture)
 {
-    public PriorityTests(ITestOutputHelper output, DatabaseFixture databaseFixture)
-        : base(output, databaseFixture)
-    {
-    }
-
     [Fact]
     public async Task FullTest()
     {

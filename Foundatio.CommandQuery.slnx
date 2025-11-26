@@ -2,16 +2,13 @@
   <Folder Name="/Build/">
     <File Path=".github/workflows/build.yml" />
     <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Samples/" />
   <Folder Name="/Samples/EntityFramework/">
     <Project Path="samples/EntityFramework/Tracker.Client/Tracker.Client.csproj" />
     <Project Path="samples/EntityFramework/Tracker.Core/Tracker.Core.csproj" />
-    <Project Path="samples/EntityFramework/Tracker.Database/Tracker.Database.sqlproj" Id="0210d856-b45c-49d0-a208-1eb435cbb3f1">
-      <Build />
-      <Deploy />
-    </Project>
     <Project Path="samples/EntityFramework/Tracker.Host/Tracker.Host.csproj" />
     <Project Path="samples/EntityFramework/Tracker.Service/Tracker.Service.csproj" />
     <Project Path="samples/EntityFramework/Tracker.Shared/Tracker.Shared.csproj" />
@@ -24,8 +21,6 @@
     <Project Path="tests/Foundatio.CommandQuery.MongoDB.Tests/Foundatio.CommandQuery.MongoDB.Tests.csproj" Id="29f65eb8-1b16-4ab9-85d4-ee5173137c89" />
     <Project Path="tests/Foundatio.CommandQuery.Tests/Foundatio.CommandQuery.Tests.csproj" Id="eb09253e-86ea-43c9-9640-d72ddab0de07" />
   </Folder>
-  <Project Path="../Foundatio.Mediator/src/Foundatio.Mediator.Abstractions/Foundatio.Mediator.Abstractions.csproj" />
-  <Project Path="../Foundatio.Mediator/src/Foundatio.Mediator/Foundatio.Mediator.csproj" />
   <Project Path="src/Foundatio.CommandQuery.Dispatcher/Foundatio.CommandQuery.Dispatcher.csproj" Id="817ec0dc-4421-48b7-b60e-1ec6ac3f3622" />
   <Project Path="src/Foundatio.CommandQuery.Endpoints/Foundatio.CommandQuery.Endpoints.csproj" Id="012fcc75-7bfd-48c4-8712-98f8ea057d07" />
   <Project Path="src/Foundatio.CommandQuery.EntityFramework/Foundatio.CommandQuery.EntityFramework.csproj" Id="94dc262e-6e49-4ad4-9767-7c25a0c4065e" />

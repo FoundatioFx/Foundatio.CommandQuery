@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 namespace Foundatio.CommandQuery.Definitions;
 
 /// <summary>

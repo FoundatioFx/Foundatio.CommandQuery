@@ -1,5 +1,6 @@
 using System.Security.Claims;
 
+using Foundatio.CommandQuery.Definitions;
 using Foundatio.CommandQuery.Dispatcher;
 
 using Microsoft.AspNetCore.Builder;
@@ -69,6 +70,10 @@ public partial class DispatcherEndpoint : IEndpointRoute
         CancellationToken cancellationToken = default)
     {
         var request = dispatchRequest.Request;
+
+        // Apply current user principal if supported
+        if (request is IRequestPrincipal requestPrincipal)
+            requestPrincipal.ApplyPrincipal(user);
 
         try
         {

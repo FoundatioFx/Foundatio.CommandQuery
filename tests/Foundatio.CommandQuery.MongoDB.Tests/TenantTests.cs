@@ -8,12 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Foundatio.CommandQuery.MongoDB.Tests;
 
-public class TenantTests : DatabaseTestBase
+public class TenantTests(DatabaseFixture databaseFixture) : DatabaseTestBase(databaseFixture)
 {
-    public TenantTests(ITestOutputHelper output, DatabaseFixture databaseFixture)
-        : base(output, databaseFixture)
-    {
-    }
 
     [Fact]
     public async Task FullTest()

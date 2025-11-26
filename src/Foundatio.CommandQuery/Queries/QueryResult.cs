@@ -1,10 +1,4 @@
-using System.Collections.Immutable;
-using System.ComponentModel;
 using System.Text.Json.Serialization;
-
-using Foundatio.Mediator;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Foundatio.CommandQuery.Queries;
 
