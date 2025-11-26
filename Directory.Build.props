@@ -44,9 +44,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include=".\..\..\logo.png">
+    <None Include=".\..\..\foundatio.png">
       <Pack>true</Pack>
-      <PackagePath>\</PackagePath>
+      <PackagePath>\logo.png</PackagePath>
       <Visible>false</Visible>
     </None>
     <None Include=".\..\..\README.md">
