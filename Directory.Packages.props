@@ -13,7 +13,7 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="Equatable.Generator" Version="2.1.0" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
-    <PackageVersion Include="Foundatio.Mediator" Version="1.0.0-rc.3.endpoints.10" />
+    <PackageVersion Include="Foundatio.Mediator" Version="1.0.0-rc.4.2" />
     <PackageVersion Include="Foundatio.Mediator.Abstractions" Version="1.0.0-rc.3.8" />
     <PackageVersion Include="Injectio" Version="5.1.0" />
     <PackageVersion Include="LoreSoft.Blazor.Controls" Version="13.1.1" />
