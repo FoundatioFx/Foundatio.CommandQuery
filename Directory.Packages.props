@@ -8,7 +8,7 @@
     <PackageVersion Include="AspNetCore.SecurityKey" Version="4.0.0" />
     <PackageVersion Include="AssemblyMetadata.Generators" Version="2.1.0" />
     <PackageVersion Include="AwesomeAssertions" Version="9.3.0" />
-    <PackageVersion Include="Blazilla" Version="2.0.1" />
+    <PackageVersion Include="Blazilla" Version="2.1.0" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="Equatable.Generator" Version="2.1.0" />
