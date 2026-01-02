@@ -9,7 +9,7 @@ namespace Foundatio.CommandQuery.Models;
 /// </summary>
 /// <seealso cref="ITrackUpdated" />
 /// <seealso cref="ITrackConcurrency" />
-public class EntityUpdateModel : ITrackUpdated, ITrackConcurrency
+public class UpdateModel : ITrackUpdated, ITrackConcurrency
 {
     /// <inheritdoc />
     [JsonPropertyName("updated")]

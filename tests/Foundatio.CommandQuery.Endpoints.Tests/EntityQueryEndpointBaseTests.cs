@@ -336,7 +336,7 @@ public class QueryTestListModel
     public string? Description { get; set; }
 }
 
-public class QueryTestReadModel : EntityReadModel<string>
+public class QueryTestReadModel : ReadModel<string>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

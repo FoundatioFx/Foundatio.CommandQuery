@@ -435,19 +435,19 @@ public class CommandTestListModel
     public string? Description { get; set; }
 }
 
-public class CommandTestReadModel : EntityReadModel<string>
+public class CommandTestReadModel : ReadModel<string>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
 }
 
-public class CommandTestCreateModel : EntityCreateModel<string>
+public class CommandTestCreateModel : CreateModel<string>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
 }
 
-public class CommandTestUpdateModel : EntityUpdateModel
+public class CommandTestUpdateModel : UpdateModel
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

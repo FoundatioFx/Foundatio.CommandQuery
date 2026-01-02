@@ -10,7 +10,7 @@ namespace Foundatio.CommandQuery.Models;
 /// </summary>
 /// <typeparam name="TKey">The type of the key.</typeparam>
 /// <seealso cref="IHaveIdentifier{TKey}" />
-public class EntityIdentifierModel<TKey> : IHaveIdentifier<TKey>
+public class IdentifierModel<TKey> : IHaveIdentifier<TKey>
 {
     /// <inheritdoc />
     [NotNull]

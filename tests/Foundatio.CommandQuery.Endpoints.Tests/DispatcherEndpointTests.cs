@@ -304,19 +304,19 @@ public class TestRequest
     public string Name { get; set; } = null!;
 }
 
-public class TestEntityCreateModel : EntityCreateModel<string>
+public class TestEntityCreateModel : CreateModel<string>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
 }
 
-public class TestEntityUpdateModel : EntityUpdateModel
+public class TestEntityUpdateModel : UpdateModel
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }
 }
 
-public class TestEntityReadModel : EntityReadModel<string>
+public class TestEntityReadModel : ReadModel<string>
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

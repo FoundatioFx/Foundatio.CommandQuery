@@ -81,9 +81,9 @@ public static class GridExtensions
     public static Grid.DataResult<T> ToResult<T>(this QueryResult<T> pagedResult)
     {
         return new Grid.DataResult<T>(
-            Total: (int)(pagedResult.Total ?? 0),
-            Items: pagedResult.Data ?? []
-        );
+            items: pagedResult.Data ?? [],
+            total: (int)(pagedResult.Total ?? 0),
+            continuationToken: pagedResult.ContinuationToken);
     }
 
     private static QueryOperators? TranslateOperator(string? value)

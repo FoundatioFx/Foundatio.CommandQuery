@@ -8,10 +8,10 @@ namespace Foundatio.CommandQuery.Models;
 /// A create model base <see langword="class"/>
 /// </summary>
 /// <typeparam name="TKey">The type of the key.</typeparam>
-/// <seealso cref="EntityIdentifierModel{TKey}" />
+/// <seealso cref="IdentifierModel{TKey}" />
 /// <seealso cref="ITrackCreated" />
 /// <seealso cref="ITrackUpdated" />
-public class EntityCreateModel<TKey> : EntityIdentifierModel<TKey>, ITrackCreated, ITrackUpdated
+public class CreateModel<TKey> : IdentifierModel<TKey>, ITrackCreated, ITrackUpdated
 {
     /// <inheritdoc />
     [JsonPropertyName("created")]

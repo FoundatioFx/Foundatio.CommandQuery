@@ -22,7 +22,7 @@ public class DispatchRequestTests
     {
         // Arrange
         var principal = new ClaimsPrincipal(new ClaimsIdentity("test"));
-        var createModel = new EntityCreateModel<string>
+        var createModel = new CreateModel<string>
         {
             Id = "test-entity-123",
             Created = new DateTimeOffset(2024, 1, 15, 10, 30, 0, TimeSpan.Zero),
@@ -30,7 +30,7 @@ public class DispatchRequestTests
             Updated = new DateTimeOffset(2024, 1, 15, 10, 30, 0, TimeSpan.Zero),
             UpdatedBy = "test-user"
         };
-        var createCommand = new CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>(principal, createModel);
+        var createCommand = new CreateEntity<CreateModel<string>, ReadModel<string>>(principal, createModel);
         var dispatchRequest = DispatchRequest.Create(createCommand);
 
         // Act
@@ -42,7 +42,7 @@ public class DispatchRequestTests
         deserializedRequest!.Type.Should().Be(createCommand.GetType().AssemblyQualifiedName);
         deserializedRequest.Request.Should().NotBeNull();
 
-        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>>().Subject;
+        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<CreateEntity<CreateModel<string>, ReadModel<string>>>().Subject;
         deserializedCommand.Model.Should().NotBeNull();
         deserializedCommand.Model.Id.Should().Be("test-entity-123");
         deserializedCommand.Model.CreatedBy.Should().Be("test-user");
@@ -56,12 +56,12 @@ public class DispatchRequestTests
         identity.AddClaim(new Claim(ClaimTypes.Name, "admin-user"));
         var principal = new ClaimsPrincipal(identity);
 
-        var updateModel = new EntityUpdateModel
+        var updateModel = new UpdateModel
         {
             Updated = new DateTimeOffset(2024, 1, 15, 11, 0, 0, TimeSpan.Zero),
             UpdatedBy = "admin-user"
         };
-        var updateCommand = new UpdateEntity<string, EntityUpdateModel, EntityReadModel<string>>(principal, "entity-456", updateModel, upsert: true);
+        var updateCommand = new UpdateEntity<string, UpdateModel, ReadModel<string>>(principal, "entity-456", updateModel, upsert: true);
         var dispatchRequest = DispatchRequest.Create(updateCommand);
 
         // Act
@@ -72,7 +72,7 @@ public class DispatchRequestTests
         deserializedRequest.Should().NotBeNull();
         deserializedRequest!.Type.Should().Be(updateCommand.GetType().AssemblyQualifiedName);
 
-        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<UpdateEntity<string, EntityUpdateModel, EntityReadModel<string>>>().Subject;
+        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<UpdateEntity<string, UpdateModel, ReadModel<string>>>().Subject;
         deserializedCommand.Id.Should().Be("entity-456");
         deserializedCommand.Upsert.Should().BeTrue();
         deserializedCommand.Model.Should().NotBeNull();
@@ -84,7 +84,7 @@ public class DispatchRequestTests
     {
         // Arrange
         var principal = new ClaimsPrincipal(new ClaimsIdentity("Bearer"));
-        var deleteCommand = new DeleteEntity<Guid, EntityReadModel<Guid>>(principal, Guid.Parse("550e8400-e29b-41d4-a716-446655440000"));
+        var deleteCommand = new DeleteEntity<Guid, ReadModel<Guid>>(principal, Guid.Parse("550e8400-e29b-41d4-a716-446655440000"));
         var dispatchRequest = DispatchRequest.Create(deleteCommand);
 
         // Act
@@ -95,7 +95,7 @@ public class DispatchRequestTests
         deserializedRequest.Should().NotBeNull();
         deserializedRequest!.Type.Should().Be(deleteCommand.GetType().AssemblyQualifiedName);
 
-        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<DeleteEntity<Guid, EntityReadModel<Guid>>>().Subject;
+        var deserializedCommand = deserializedRequest.Request.Should().BeOfType<DeleteEntity<Guid, ReadModel<Guid>>>().Subject;
         deserializedCommand.Id.Should().Be(Guid.Parse("550e8400-e29b-41d4-a716-446655440000"));
     }
 
@@ -104,7 +104,7 @@ public class DispatchRequestTests
     {
         // Arrange
         var principal = new ClaimsPrincipal(new ClaimsIdentity("Bearer"));
-        var getQuery = new GetEntity<int, EntityReadModel<int>>(principal, 12345);
+        var getQuery = new GetEntity<int, ReadModel<int>>(principal, 12345);
         var dispatchRequest = DispatchRequest.Create(getQuery);
 
         // Act
@@ -115,7 +115,7 @@ public class DispatchRequestTests
         deserializedRequest.Should().NotBeNull();
         deserializedRequest!.Type.Should().Be(getQuery.GetType().AssemblyQualifiedName);
 
-        var deserializedQuery = deserializedRequest.Request.Should().BeOfType<GetEntity<int, EntityReadModel<int>>>().Subject;
+        var deserializedQuery = deserializedRequest.Request.Should().BeOfType<GetEntity<int, ReadModel<int>>>().Subject;
         deserializedQuery.Id.Should().Be(12345);
     }
 
@@ -129,7 +129,7 @@ public class DispatchRequestTests
         identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
         var principal = new ClaimsPrincipal(identity);
 
-        var createModel = new EntityCreateModel<string>
+        var createModel = new CreateModel<string>
         {
             Id = "complex-entity-789",
             Created = new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
@@ -137,7 +137,7 @@ public class DispatchRequestTests
             Updated = new DateTimeOffset(2024, 1, 15, 9, 15, 0, TimeSpan.Zero),
             UpdatedBy = "john.doe"
         };
-        var createCommand = new CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>(principal, createModel);
+        var createCommand = new CreateEntity<CreateModel<string>, ReadModel<string>>(principal, createModel);
         var dispatchRequest = DispatchRequest.Create(createCommand);
 
         // Act
@@ -146,7 +146,7 @@ public class DispatchRequestTests
 
         // Assert
         deserializedRequest.Should().NotBeNull();
-        var deserializedCommand = deserializedRequest!.Request.Should().BeOfType<CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>>().Subject;
+        var deserializedCommand = deserializedRequest!.Request.Should().BeOfType<CreateEntity<CreateModel<string>, ReadModel<string>>>().Subject;
 
         // Verify all command properties are preserved
         deserializedCommand.Model.Id.Should().Be("complex-entity-789");
@@ -161,8 +161,8 @@ public class DispatchRequestTests
     {
         // Arrange
         var principal = new ClaimsPrincipal(new ClaimsIdentity("Bearer"));
-        var createModel = new EntityCreateModel<string> { Id = "structure-test" };
-        var createCommand = new CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>(principal, createModel);
+        var createModel = new CreateModel<string> { Id = "structure-test" };
+        var createCommand = new CreateEntity<CreateModel<string>, ReadModel<string>>(principal, createModel);
         var dispatchRequest = DispatchRequest.Create(createCommand);
 
         // Act
@@ -214,7 +214,7 @@ public class DispatchRequestTests
     public void JsonDeserialization_WithMissingRequestProperty_ThrowsJsonException()
     {
         // Arrange
-        var typeString = typeof(CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>).AssemblyQualifiedName;
+        var typeString = typeof(CreateEntity<CreateModel<string>, ReadModel<string>>).AssemblyQualifiedName;
         var invalidJson = $$"""
         {
             "type": "{{typeString}}"
@@ -256,7 +256,7 @@ public class DispatchRequestTests
         // Arrange
         var dispatchRequest = new DispatchRequest
         {
-            Type = typeof(CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>).AssemblyQualifiedName!,
+            Type = typeof(CreateEntity<CreateModel<string>, ReadModel<string>>).AssemblyQualifiedName!,
             Request = null!
         };
 
@@ -271,15 +271,15 @@ public class DispatchRequestTests
     {
         // Arrange
         var principal = new ClaimsPrincipal(new ClaimsIdentity("Bearer"));
-        var createModel = new EntityCreateModel<string> { Id = "create-test" };
-        var createCommand = new CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>(principal, createModel);
+        var createModel = new CreateModel<string> { Id = "create-test" };
+        var createCommand = new CreateEntity<CreateModel<string>, ReadModel<string>>(principal, createModel);
 
         // Act
         var dispatchRequest = DispatchRequest.Create(createCommand);
 
         // Assert
         dispatchRequest.Should().NotBeNull();
-        dispatchRequest.Type.Should().Be(typeof(CreateEntity<EntityCreateModel<string>, EntityReadModel<string>>).AssemblyQualifiedName);
+        dispatchRequest.Type.Should().Be(typeof(CreateEntity<CreateModel<string>, ReadModel<string>>).AssemblyQualifiedName);
         dispatchRequest.Request.Should().BeSameAs(createCommand);
     }
 
@@ -299,12 +299,12 @@ public class DispatchRequestTests
         identity.AddClaim(new Claim(ClaimTypes.Name, "roundtrip.user"));
         var principal = new ClaimsPrincipal(identity);
 
-        var updateModel = new EntityUpdateModel
+        var updateModel = new UpdateModel
         {
             Updated = new DateTimeOffset(2024, 1, 15, 12, 0, 0, TimeSpan.Zero),
             UpdatedBy = "roundtrip.user"
         };
-        var updateCommand = new UpdateEntity<Guid, EntityUpdateModel, EntityReadModel<Guid>>(
+        var updateCommand = new UpdateEntity<Guid, UpdateModel, ReadModel<Guid>>(
             principal, Guid.Parse("550e8400-e29b-41d4-a716-446655440000"), updateModel, upsert: false);
         var dispatchRequest = DispatchRequest.Create(updateCommand);
 
@@ -315,7 +315,7 @@ public class DispatchRequestTests
         var roundTrip2 = JsonSerializer.Deserialize<DispatchRequest>(json2, _options);
 
         // Assert
-        var finalCommand = roundTrip2!.Request.Should().BeOfType<UpdateEntity<Guid, EntityUpdateModel, EntityReadModel<Guid>>>().Subject;
+        var finalCommand = roundTrip2!.Request.Should().BeOfType<UpdateEntity<Guid, UpdateModel, ReadModel<Guid>>>().Subject;
         finalCommand.Id.Should().Be(Guid.Parse("550e8400-e29b-41d4-a716-446655440000"));
         finalCommand.Upsert.Should().BeFalse();
         finalCommand.Model.Updated.Should().Be(updateModel.Updated);
@@ -328,31 +328,31 @@ public class DispatchRequestTests
         // Test with different key types to ensure generic type handling works correctly
 
         // String key
-        var stringDeleteCommand = new DeleteEntity<string, EntityReadModel<string>>(null, "string-key-123");
+        var stringDeleteCommand = new DeleteEntity<string, ReadModel<string>>(null, "string-key-123");
         var stringDispatchRequest = DispatchRequest.Create(stringDeleteCommand);
 
         // Int key
-        var intDeleteCommand = new DeleteEntity<int, EntityReadModel<int>>(null, 42);
+        var intDeleteCommand = new DeleteEntity<int, ReadModel<int>>(null, 42);
         var intDispatchRequest = DispatchRequest.Create(intDeleteCommand);
 
         // Guid key
-        var guidDeleteCommand = new DeleteEntity<Guid, EntityReadModel<Guid>>(null, Guid.NewGuid());
+        var guidDeleteCommand = new DeleteEntity<Guid, ReadModel<Guid>>(null, Guid.NewGuid());
         var guidDispatchRequest = DispatchRequest.Create(guidDeleteCommand);
 
         // Act & Assert for each type
         var stringJson = JsonSerializer.Serialize(stringDispatchRequest, _options);
         var stringDeserialized = JsonSerializer.Deserialize<DispatchRequest>(stringJson, _options);
-        var stringResult = stringDeserialized!.Request.Should().BeOfType<DeleteEntity<string, EntityReadModel<string>>>().Subject;
+        var stringResult = stringDeserialized!.Request.Should().BeOfType<DeleteEntity<string, ReadModel<string>>>().Subject;
         stringResult.Id.Should().Be("string-key-123");
 
         var intJson = JsonSerializer.Serialize(intDispatchRequest, _options);
         var intDeserialized = JsonSerializer.Deserialize<DispatchRequest>(intJson, _options);
-        var intResult = intDeserialized!.Request.Should().BeOfType<DeleteEntity<int, EntityReadModel<int>>>().Subject;
+        var intResult = intDeserialized!.Request.Should().BeOfType<DeleteEntity<int, ReadModel<int>>>().Subject;
         intResult.Id.Should().Be(42);
 
         var guidJson = JsonSerializer.Serialize(guidDispatchRequest, _options);
         var guidDeserialized = JsonSerializer.Deserialize<DispatchRequest>(guidJson, _options);
-        var guidResult = guidDeserialized!.Request.Should().BeOfType<DeleteEntity<Guid, EntityReadModel<Guid>>>().Subject;
+        var guidResult = guidDeserialized!.Request.Should().BeOfType<DeleteEntity<Guid, ReadModel<Guid>>>().Subject;
         guidResult.Id.Should().Be(guidDeleteCommand.Id);
     }
 }

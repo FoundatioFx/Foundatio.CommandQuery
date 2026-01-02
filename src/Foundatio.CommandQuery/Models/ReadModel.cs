@@ -8,11 +8,11 @@ namespace Foundatio.CommandQuery.Models;
 /// A read model base <see langword="class"/>
 /// </summary>
 /// <typeparam name="TKey">The type of the key.</typeparam>
-/// <seealso cref="EntityIdentifierModel{TKey}" />
+/// <seealso cref="IdentifierModel{TKey}" />
 /// <seealso cref="ITrackCreated" />
 /// <seealso cref="ITrackUpdated" />
 /// <seealso cref="ITrackConcurrency" />
-public class EntityReadModel<TKey> : EntityIdentifierModel<TKey>, ITrackCreated, ITrackUpdated, ITrackConcurrency
+public class ReadModel<TKey> : IdentifierModel<TKey>, ITrackCreated, ITrackUpdated, ITrackConcurrency
 {
     /// <inheritdoc />
     [JsonPropertyName("created")]

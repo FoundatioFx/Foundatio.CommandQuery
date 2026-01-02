@@ -178,7 +178,7 @@ public class EditStateManagerTests
         var testReadModel = new TestReadModel { Id = 123, Name = "Test Model", Description = "Test Description" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(testReadModel));
 
@@ -208,7 +208,7 @@ public class EditStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(999)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(null));
 
@@ -238,7 +238,7 @@ public class EditStateManagerTests
         var testReadModel = new TestReadModel { Id = 123, Name = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(testReadModel));
 
@@ -272,7 +272,7 @@ public class EditStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .Callback((_, _, _) => throw new InvalidOperationException("Test exception"));
 
@@ -302,7 +302,7 @@ public class EditStateManagerTests
         var testReadModel = new TestReadModel { Id = 123, Name = "Test Model" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(testReadModel))
             .ExpectedCallCount(1);
@@ -331,7 +331,7 @@ public class EditStateManagerTests
         // Arrange
         var mockService = new MockDataService();
 
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .Callback((_, _, _) =>
                 ValueTask.FromResult<TestReadModel?>(new TestReadModel
@@ -371,7 +371,7 @@ public class EditStateManagerTests
         var savedReadModel = new TestReadModel { Id = 123, Name = "Updated Name", Description = "Updated Description" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Save<int, TestUpdateModel, TestReadModel>(0, updateModel) // Default key for new item
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(savedReadModel));
 
@@ -406,10 +406,10 @@ public class EditStateManagerTests
         var savedReadModel = new TestReadModel { Id = 456, Name = "Updated Name", Description = "Updated Description" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(456)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(originalReadModel));
-        mockService.Methods
+        mockService.Setups
             .Save<int, TestUpdateModel, TestReadModel>(456, Arg.Any<TestUpdateModel>()) // Should use existing ID
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(savedReadModel));
 
@@ -463,7 +463,7 @@ public class EditStateManagerTests
         var savedReadModel = new TestReadModel { Id = 123, Name = "Test", Description = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Save<int, TestUpdateModel, TestReadModel>(0, updateModel)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(savedReadModel));
 
@@ -500,7 +500,7 @@ public class EditStateManagerTests
         var updateModel = new TestUpdateModel { Name = "Test", Description = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Save<int, TestUpdateModel, TestReadModel>(0, updateModel)
             .Callback((_, _, _) => throw new InvalidOperationException("Save failed"));
 
@@ -529,10 +529,10 @@ public class EditStateManagerTests
         var readModel = new TestReadModel { Id = 123, Name = "Test", Description = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(readModel));
-        mockService.Methods
+        mockService.Setups
             .Delete<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(null));
 
@@ -587,10 +587,10 @@ public class EditStateManagerTests
         var readModel = new TestReadModel { Id = 123, Name = "Test", Description = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(readModel));
-        mockService.Methods
+        mockService.Setups
             .Delete<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(null));
 
@@ -629,10 +629,10 @@ public class EditStateManagerTests
         var readModel = new TestReadModel { Id = 123, Name = "Test", Description = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(readModel));
-        mockService.Methods
+        mockService.Setups
             .Delete<int, TestReadModel>(123)
             .Callback((_, _) => throw new InvalidOperationException("Delete failed"));
 
@@ -721,7 +721,7 @@ public class EditStateManagerTests
         var mappedUpdateModel = new TestUpdateModel { Name = "New Item", Description = "New Description" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Save<int, TestUpdateModel, TestReadModel>(0, Arg.Any<TestUpdateModel>()) // Should use default key for new items
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(savedReadModel));
 
@@ -748,7 +748,7 @@ public class EditStateManagerTests
         var testReadModel = new TestReadModel { Id = 123, Name = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestReadModel>(123)
             .ReturnValue(ValueTask.FromResult<TestReadModel?>(testReadModel));
 

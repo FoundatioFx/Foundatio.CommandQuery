@@ -1,3 +1,4 @@
+using Foundatio.CommandQuery;
 using Foundatio.CommandQuery.Endpoints;
 using Foundatio.Mediator;
 
@@ -97,6 +98,7 @@ public static class Program
                 .AddAssembly(typeof(Program).Assembly)
                 .AddAssembly(typeof(RouteLinks).Assembly)
                 .AddAssembly(typeof(TrackerContext).Assembly)
+                .AddAssembly(typeof(LinqExpressionBuilder).Assembly)
             );
 
         services

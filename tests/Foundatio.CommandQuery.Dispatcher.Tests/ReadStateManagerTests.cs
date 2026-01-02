@@ -50,7 +50,7 @@ public class ReadStateManagerTests
 
         var mockService = new MockDataService();
 
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(testModel));
 
@@ -74,7 +74,7 @@ public class ReadStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(999)
             .ReturnValue(ValueTask.FromResult<TestModel?>(null));
 
@@ -96,7 +96,7 @@ public class ReadStateManagerTests
         var testModel = new TestModel { Id = 123, Name = "Test" };
         var mockService = new MockDataService();
 
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(testModel));
 
@@ -130,7 +130,7 @@ public class ReadStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .Callback((_, _, _) => throw new InvalidOperationException("Test exception"));
 
@@ -158,7 +158,7 @@ public class ReadStateManagerTests
         var testModel = new TestModel { Id = 123, Name = "Test Model" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(testModel))
             .ExpectedCallCount(1);
@@ -184,7 +184,7 @@ public class ReadStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .Callback((_, _, _) =>
                 ValueTask.FromResult<TestModel?>(new TestModel
@@ -222,7 +222,7 @@ public class ReadStateManagerTests
     {
         // Arrange
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(new TestModel
             {
@@ -231,7 +231,7 @@ public class ReadStateManagerTests
             }))
             .ExpectedCallCount(1);
 
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(456)
             .ReturnValue(ValueTask.FromResult<TestModel?>(new TestModel
             {
@@ -270,7 +270,7 @@ public class ReadStateManagerTests
         var testModel = new TestModel { Id = 123, Name = "Test Model" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(testModel))
             .ExpectedCallCount(2);
@@ -302,7 +302,7 @@ public class ReadStateManagerTests
         var testModel = new TestModel { Id = 123, Name = "Test" };
 
         var mockService = new MockDataService();
-        mockService.Methods
+        mockService.Setups
             .Get<int, TestModel>(123)
             .ReturnValue(ValueTask.FromResult<TestModel?>(testModel))
             .ExpectedCallCount(1);
