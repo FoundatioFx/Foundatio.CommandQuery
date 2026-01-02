@@ -1,4 +1,4 @@
-﻿namespace Tracker.Web.Endpoints;
+namespace Tracker.Web.Endpoints;
 
 public interface IEndpointRoute
 {
