@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Foundatio.Mediator.Abstractions" VersionOverride="1.0.0-rc.3.7" />
+    <PackageReference Include="Foundatio.Mediator.Abstractions" VersionOverride="1.0.0-rc.5.4" />
     <ProjectReference Include="..\..\..\src\Foundatio.CommandQuery\Foundatio.CommandQuery.csproj" />
   </ItemGroup>
 
