@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" />
     <ProjectReference Include="..\..\..\src\Foundatio.CommandQuery.Dispatcher\Foundatio.CommandQuery.Dispatcher.csproj" />
     <ProjectReference Include="..\Tracker.Shared\Tracker.Shared.csproj" />
   </ItemGroup>
