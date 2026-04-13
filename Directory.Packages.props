@@ -11,7 +11,7 @@
     <PackageVersion Include="Blazilla" Version="2.3.0" />
     <PackageVersion Include="Bogus" Version="35.6.5" />
     <PackageVersion Include="coverlet.collector" Version="8.0.1" />
-    <PackageVersion Include="Equatable.Generator" Version="2.2.0" />
+    <PackageVersion Include="Equatable.Generator" Version="2.2.1" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="Foundatio.Mediator" Version="1.0.1" />
     <PackageVersion Include="Foundatio.Mediator.Abstractions" Version="1.0.1" />
