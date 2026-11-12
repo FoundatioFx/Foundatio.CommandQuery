@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+[assembly: MediatorConfiguration(EndpointDiscovery = EndpointDiscovery.None)]
+
 namespace Foundatio.CommandQuery.Endpoints.Tests;
 
 public class EntityCommandEndpointBaseTests

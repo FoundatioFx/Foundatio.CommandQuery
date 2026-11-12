@@ -60,22 +60,12 @@ public static class ProblemDetailsCustomizer
 
     private static Exception? GetException(ProblemDetailsContext context)
     {
-#if NET8_0_OR_GREATER
-        var exception = context.Exception;
-#else
-        var feature = context.HttpContext.Features.Get<IExceptionHandlerFeature>();
-        var exception = feature?.Error;
-#endif
-        return exception;
+        return context.Exception;
     }
 
     private static void AddValidationErrors(ProblemDetailsContext context, IDictionary<string, string[]> errors)
     {
-#if NET8_0_OR_GREATER
         context.ProblemDetails = new HttpValidationProblemDetails(errors);
-#else
-        context.ProblemDetails.Extensions.Add("errors", errors);
-#endif
     }
 
     /// <summary>
