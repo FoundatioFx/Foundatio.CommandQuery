@@ -174,7 +174,7 @@ public class DispatchRequestTests
         json.Should().Contain("\"model\":");
         json.Should().Contain($"\"id\":\"structure-test\"");
         json.Should().Contain("CreateEntity"); // Just check that the type name contains the command name
-        json.Should().Contain("EntityCreateModel"); // And the model type
+        json.Should().Contain("CreateModel"); // And the model type
     }
 
     [Fact]

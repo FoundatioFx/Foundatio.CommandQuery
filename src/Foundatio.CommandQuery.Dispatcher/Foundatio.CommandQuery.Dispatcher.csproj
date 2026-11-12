@@ -1,25 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Description>Dispatcher implementation for Command Query Responsibility Segregation (CQRS) framework providing centralized command and query handling with caching support</Description>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" VersionOverride="10.0.15" />
+    <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="10.0.15" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" VersionOverride="9.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="9.0.11" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" VersionOverride="9.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="9.0.11" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net11.0'">
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" VersionOverride="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" VersionOverride="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
